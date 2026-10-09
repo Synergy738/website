@@ -1,0 +1,388 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { me, skills, experience, projects, certs, orgs } from "./data";
+import DitherVeil from "./bits/DitherVeil";
+import ScrollExpand from "./bits/ScrollExpand";
+import ScrollReveal from "./bits/ScrollReveal";
+import ScrollFloat from "./bits/ScrollFloat";
+import OrbitImages from "./bits/OrbitImages";
+import ReachForStars from "./bits/ReachForStars";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import TargetCursor from "./bits/TargetCursor";
+import CardSwap from "./bits/CardSwap";
+
+// About's numbers come straight from the certificates, so they stay true as the list grows
+const CERT_ORGS = [...new Set(certs.map((c) => c.org))];
+const AVG_MARK = Math.round(certs.reduce((sum, c) => sum + parseFloat(c.mark), 0) / certs.length);
+
+const BUST = "https://images.unsplash.com/photo-1737071371043-761e02b1ef95?q=80&w=1400&auto=format&fit=crop";
+
+const SECTIONS = [
+  ["home", "I"],
+  ["about", "II"],
+  ["skills", "III"],
+  ["experience", "IV"],
+  ["projects", "V"],
+  ["certifications", "VI"],
+  ["contact", "VII"],
+];
+
+// ScrollTrigger measures once; ScrollExpand and late images change the page height after that.
+function useScrollTriggerRefresh() {
+  useEffect(() => {
+    const ro = new ResizeObserver(() => ScrollTrigger.refresh());
+    ro.observe(document.body);
+    return () => ro.disconnect();
+  }, []);
+}
+
+function useActiveSection() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.find((e) => e.isIntersecting);
+        if (!hit || !ref.current) return;
+        ref.current
+          .querySelectorAll("a")
+          .forEach((a) => a.classList.toggle("on", a.hash === "#" + hit.target.id));
+      },
+      // a 1px line across the middle of the viewport: the section under it is active
+      { rootMargin: "-50% 0px -50% 0px" }
+    );
+    document.querySelectorAll("section[id]").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+  return ref;
+}
+
+// Cursor-tracked chrome sheen on a card, via CSS vars.
+function sheen(e) {
+  const r = e.currentTarget.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width;
+  const y = (e.clientY - r.top) / r.height;
+  const s = e.currentTarget.style;
+  s.setProperty("--sx", x * 100 + "%");
+  s.setProperty("--sy", y * 100 + "%");
+  s.setProperty("--rx", (0.5 - y) * 10 + "deg");
+  s.setProperty("--ry", (x - 0.5) * 12 + "deg");
+}
+
+function resetSheen(e) {
+  const s = e.currentTarget.style;
+  s.setProperty("--rx", "0deg");
+  s.setProperty("--ry", "0deg");
+}
+
+export default function App() {
+  useScrollTriggerRefresh();
+  const navRef = useActiveSection();
+  const finePointer = typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches;
+  const [heroIn, setHeroIn] = useState(false);
+
+  return (
+    <>
+      {finePointer && <TargetCursor spinDuration={2.4} hideDefaultCursor parallaxOn cursorColor="#e9edf2" />}
+      <div className="grain" aria-hidden="true" />
+      <div className="vignette" aria-hidden="true" />
+
+      <nav className="rail" ref={navRef} aria-label="Sections">
+        {SECTIONS.map(([id, numeral]) => (
+          <a key={id} href={"#" + id} className="cursor-target">
+            <span className="numeral">{numeral}</span>
+            <span className="rail-label">{id}</span>
+          </a>
+        ))}
+      </nav>
+
+      <main>
+        <section id="home" className="hero">
+          <div className="hero-veil" aria-hidden="true">
+            <DitherVeil
+              src={BUST}
+              pattern="floyd"
+              pixelSize={2}
+              inkColor="#06060b"
+              paperColor="#cfd6df"
+              revealRadius={200}
+              softness={0.6}
+              linger={1}
+              onReveal={setHeroIn}
+            />
+          </div>
+
+          <div className={"hero-copy" + (heroIn ? " in" : "")}>
+            <p className="kicker">Cape Town &middot; South Africa</p>
+            <h1 className="chrome-text">
+              Blũ
+              <br />
+              Dennis
+            </h1>
+            <p className="hero-role">{me.role}</p>
+            <a className="btn cursor-target" href="#contact">
+              Get in touch
+            </a>
+          </div>
+
+          <span className="scroll-hint" aria-hidden="true">
+            scroll
+          </span>
+        </section>
+
+        <section className="expand" aria-label="Interlude">
+          <ScrollExpand
+            src="https://images.unsplash.com/photo-1786800185510-ee94f5d27f9b?q=80&w=2400&auto=format&fit=crop"
+            alt="Liquid chrome waves in deep black"
+            title="Forged in chrome"
+            scrollHint="Scroll"
+            mediaZoom={1.35}
+            startRadius={2}
+            overlayScrim={1}
+            useWindowScroll
+          >
+            <p className="kicker">Full-stack &middot; Front to back</p>
+            <h2 className="chrome-text">Every pixel, every endpoint</h2>
+            <p>From the database to the last hover state, built to hold its shape under load.</p>
+          </ScrollExpand>
+        </section>
+
+        <section id="about" className="wrap">
+          <Heading numeral="II" title="About" />
+          <div className="about">
+            <div>
+              <ScrollReveal
+                baseOpacity={0.08}
+                enableBlur={false}
+                baseRotation={2}
+                blurStrength={6}
+                containerClassName="ethos-lead"
+              >
+                {me.manifesto[0]}
+              </ScrollReveal>
+              <div className="ethos" data-reveal>
+                {me.manifesto.slice(1).map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </div>
+            <aside className="facts" data-reveal>
+              <dl>
+                <div>
+                  <dt>Certifications</dt>
+                  <dd className="chrome-text">{certs.length}</dd>
+                </div>
+                <div>
+                  <dt>Institutions</dt>
+                  <dd className="chrome-text">{CERT_ORGS.length}</dd>
+                </div>
+                <div>
+                  <dt>Average mark</dt>
+                  <dd className="chrome-text">{AVG_MARK}%</dd>
+                </div>
+                <div>
+                  <dt>Studying since</dt>
+                  <dd className="chrome-text">{Math.min(...certs.map((c) => +c.date.slice(-4)))}</dd>
+                </div>
+              </dl>
+              <p className="orgs">{CERT_ORGS.join(" · ")}</p>
+            </aside>
+          </div>
+        </section>
+
+        <section id="skills" className="wrap">
+          <Heading numeral="III" title="Skills" />
+          <Arsenal />
+        </section>
+
+        <section id="experience" className="wrap">
+          <Heading numeral="IV" title="Experience" />
+          <ol className="timeline">
+            {experience.map((job) => (
+              <li className="job" key={job.company}>
+                <span className="tl-node" aria-hidden="true" />
+                <p className="when" data-reveal>{job.when}</p>
+                <ScrollFloat scrollStart="top bottom-=8%" scrollEnd="top center" stagger={0.015}>
+                  {job.role}
+                </ScrollFloat>
+                <p className="at" data-reveal>{job.company}</p>
+                <ul>
+                  {job.bullets.map((b, j) => (
+                    <li key={j} data-reveal>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="projects" className="wrap">
+          <Heading numeral="V" title="Projects" />
+          <Projects />
+        </section>
+
+        <section id="certifications" className="wrap">
+          <Heading numeral="VI" title="Certifications" />
+          <p className="note" data-reveal>
+            Thirteen certifications, 73%&ndash;100%, from Harvard, MIT, Georgia Tech, NYU, Microsoft
+            and AWS.
+          </p>
+          <div className="certs">
+            {certs.map((c) => (
+              <CertCard key={c.name} cert={c} />
+            ))}
+          </div>
+        </section>
+
+        <section id="contact" className="contact">
+          <ReachForStars />
+        </section>
+      </main>
+    </>
+  );
+}
+
+// The stack shows each project's screenshot; the details of whichever card is in front sit beside it.
+function Projects() {
+  const [front, setFront] = useState(0);
+  const show = useCallback((i) => setFront(i), []);
+  const p = projects[front];
+  return (
+    <div className="projects">
+      <div className="project-info" key={front} aria-live="polite">
+        <p className="kind">{p.kind}</p>
+        <h3 className="chrome-text">{p.title}</h3>
+        <p className="blurb">{p.blurb}</p>
+        <ul className="stack">
+          {p.stack.map((s) => (
+            <li key={s}>{s}</li>
+          ))}
+        </ul>
+        <a className="btn cursor-target" href={p.href} target="_blank" rel="noreferrer">
+          View project
+        </a>
+      </div>
+      <div className="swap-stage">
+        <CardSwap onFront={show}>
+          {projects.map((proj) => (
+            <Shot key={proj.title} project={proj} />
+          ))}
+        </CardSwap>
+      </div>
+    </div>
+  );
+}
+
+// Drop a screenshot at public/projects/<slug>.webp and the card uses it; until then it shows the title.
+function Shot({ project }) {
+  const [hasShot, setHasShot] = useState(true);
+  const slug = project.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  return (
+    <a className="cursor-target" href={project.href} target="_blank" rel="noreferrer" aria-label={project.title}>
+      {hasShot ? (
+        <img src={`/projects/${slug}.webp`} alt="" onError={() => setHasShot(false)} />
+      ) : (
+        <span className="shot-ph">
+          <span className="kind">{project.kind}</span>
+          <span className="chrome-text">{project.title}</span>
+        </span>
+      )}
+    </a>
+  );
+}
+
+function CertCard({ cert }) {
+  const org = orgs[cert.org];
+  const [hasLogo, setHasLogo] = useState(true);
+  return (
+    <article
+      className="cert cursor-target"
+      onPointerMove={sheen}
+      onPointerLeave={resetSheen}
+      data-reveal
+    >
+      <div className="crest">
+        {hasLogo ? (
+          <img src={`/logos/${org.slug}.svg`} alt={cert.org} onError={() => setHasLogo(false)} />
+        ) : (
+          <span className="mono chrome-text">{org.mono}</span>
+        )}
+      </div>
+      <p className="org">{cert.org}</p>
+      <h3>{cert.name}</h3>
+      <div className="cert-foot">
+        <span className="mark">{cert.mark}</span>
+        <span className="date">{cert.date}</span>
+      </div>
+    </article>
+  );
+}
+
+const ICON = "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/";
+
+// Every tool logo, tagged with its group, split across two counter-rotating rings.
+const TOOLS = skills.flatMap((s, g) => (s.icons || []).map((path) => ({ path, g })));
+
+function Arsenal() {
+  const [open, setOpen] = useState(0);
+  const ring = (odd) =>
+    TOOLS.filter((_, i) => i % 2 === +odd).map((t) => (
+      <span
+        key={t.path}
+        className={"tool" + (t.g === open ? " on" : "")}
+        style={{ "--icon": `url(${ICON + t.path}.svg)` }}
+      />
+    ));
+  const orbit = { shape: "circle", baseWidth: 760, rotation: 0, responsive: true, showPath: true, pathColor: "rgba(233,237,242,0.12)", pathWidth: 1 };
+
+  return (
+    <div className="arsenal">
+      <div className="orbit" aria-hidden="true">
+        <OrbitImages {...orbit} images={ring(false)} radius={340} itemSize={58} duration={70} />
+        <OrbitImages
+          {...orbit}
+          images={ring(true)}
+          radius={210}
+          itemSize={50}
+          duration={50}
+          direction="reverse"
+          centerContent={<p className="orbit-core chrome-text">{skills[open].group}</p>}
+        />
+      </div>
+
+      <ul className="groups">
+        {skills.map((s, i) => (
+          <li key={s.group} className={i === open ? "open" : ""} data-reveal>
+            <button
+              className="cursor-target"
+              aria-expanded={i === open}
+              onClick={() => setOpen(i)}
+              onPointerEnter={() => setOpen(i)}
+            >
+              <span className="numeral">{String(i + 1).padStart(2, "0")}</span>
+              {s.group}
+              <span className="count">{s.items.length}</span>
+            </button>
+            <ul className="skills">
+              {s.items.map((item, j) => (
+                <li key={item} style={{ "--i": j }}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Heading({ numeral, title }) {
+  return (
+    <header className="sec-head" data-reveal>
+      <span className="numeral">{numeral}</span>
+      <h2>{title}</h2>
+      <span className="rule" />
+    </header>
+  );
+}
