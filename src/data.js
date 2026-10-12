@@ -139,7 +139,7 @@ export const certs = [
   { name: "Cybersecurity Specialization", org: "NYU Tandon", mark: "87%", date: "Feb 2024" },
   { name: "CS50AI", org: "Harvard University", mark: "86%", date: "Feb 2024" },
   { name: "Microservices & Deployment with ASP.NET", org: "Board Infinity", mark: "95%", date: "Dec 2023" },
-  { name: "Advanced Java", org: "LearnQuest", mark: "100%", date: "Dec 2023" },
+  { name: "Advanced Java", org: "LearnQuest", mark: "92%", date: "Dec 2023" },
   { name: "C# Class Development", org: "University of Colorado", mark: "", date: "Nov 2023" },
   { name: "Java II", org: "Georgia Tech", mark: "83%", date: "Aug 2023" },
   { name: "Java I", org: "Georgia Tech", mark: "98%", date: "Jun 2023" },
