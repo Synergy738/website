@@ -11,7 +11,8 @@ import CardSwap from "./bits/CardSwap";
 
 // About's numbers come straight from the certificates, so they stay true as the list grows
 const CERT_ORGS = [...new Set(certs.map((c) => c.org))];
-const AVG_MARK = Math.round(certs.reduce((sum, c) => sum + parseFloat(c.mark), 0) / certs.length);
+const MARKS = certs.filter((c) => c.mark).map((c) => parseFloat(c.mark));
+const AVG_MARK = Math.round(MARKS.reduce((a, b) => a + b, 0) / MARKS.length);
 
 const BUST = "https://images.unsplash.com/photo-1737071371043-761e02b1ef95?q=80&w=1400&auto=format&fit=crop";
 
@@ -204,14 +205,10 @@ export default function App() {
         <section id="certifications" className="wrap">
           <Heading numeral="VI" title="Certifications" />
           <p className="note" data-reveal>
-            Thirteen certifications, 73%&ndash;100%, from Harvard, MIT, Georgia Tech, NYU, Microsoft
-            and AWS.
+            {certs.length} certifications, {Math.min(...MARKS)}%&ndash;{Math.max(...MARKS)}%, from Harvard, MIT,
+            Georgia Tech, NYU, Oracle, Microsoft and AWS.
           </p>
-          <div className="certs">
-            {certs.map((c) => (
-              <CertCard key={c.name} cert={c} />
-            ))}
-          </div>
+          <CertCarousel />
         </section>
 
         <section id="contact" className="contact">
@@ -268,6 +265,52 @@ function Shot({ project }) {
         </span>
       )}
     </a>
+  );
+}
+
+// cards fan out in depth around the active one; arrows, keys, swipe or click to move
+function CertCarousel() {
+  const [i, setI] = useState(0);
+  const x0 = useRef(0);
+  const n = certs.length;
+  const go = (d) => setI((v) => (v + d + n) % n);
+  return (
+    <div className="deck-wrap">
+      <div
+        className="deck"
+        tabIndex={0}
+        aria-roledescription="carousel"
+        aria-label="Certifications"
+        onKeyDown={(e) => e.key === "ArrowLeft" ? go(-1) : e.key === "ArrowRight" && go(1)}
+        onPointerDown={(e) => (x0.current = e.clientX)}
+        onPointerUp={(e) => {
+          const dx = e.clientX - x0.current;
+          if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+        }}
+      >
+        {certs.map((c, k) => {
+          let o = (k - i + n) % n;
+          if (o > n / 2) o -= n;
+          const a = Math.abs(o);
+          return (
+            <div
+              key={c.name}
+              className="slide"
+              style={{ "--o": o, "--a": a, zIndex: n - a, opacity: a > 2 ? 0 : 1, visibility: a > 2 ? "hidden" : undefined }}
+              aria-hidden={o !== 0}
+              onClick={() => o && setI(k)}
+            >
+              <CertCard cert={c} />
+            </div>
+          );
+        })}
+      </div>
+      <div className="deck-nav">
+        <button onClick={() => go(-1)} aria-label="Previous certification">&larr;</button>
+        <span>{String(i + 1).padStart(2, "0")} / {n}</span>
+        <button onClick={() => go(1)} aria-label="Next certification">&rarr;</button>
+      </div>
+    </div>
   );
 }
 

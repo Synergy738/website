@@ -1120,3 +1120,18 @@ footer {
   filter: drop-shadow(0 0 6px rgba(220, 230, 245, calc(var(--near, 0) * 0.8)));
 }
 .cert:hover::before { opacity: 1; }
+
+/* depth carousel */
+.deck { position: relative; height: 340px; perspective: 1200px; touch-action: pan-y; outline: none; }
+.slide {
+  --w: min(300px, 78vw);
+  position: absolute; left: 50%; top: 0; width: var(--w); height: 100%; margin-left: calc(var(--w) / -2);
+  transform: translateX(calc(var(--o) * 72%)) translateZ(calc(var(--a) * -180px)) rotateY(calc(var(--o) * -16deg));
+  filter: brightness(calc(1 - var(--a) * 0.22));
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s, filter 0.5s;
+  cursor: pointer;
+}
+.slide .cert { height: 100%; background-color: #0d0e11; }
+.deck-nav { display: flex; justify-content: center; align-items: center; gap: 1.6rem; margin-top: 1.6rem; color: var(--ink-dim); letter-spacing: 0.2em; font-size: 0.8rem; }
+.deck-nav button { background: none; border: 1px solid var(--edge); color: var(--silver); width: 44px; height: 44px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; transition: border-color 0.3s; }
+.deck-nav button:hover { border-color: var(--silver); }
