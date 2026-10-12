@@ -60,7 +60,7 @@ export const projects = [
     title: "Traffic Sign Classifier",
     kind: "Harvard CS50AI",
     stack: ["Python", "TensorFlow/Keras", "OpenCV"],
-    href: "https://github.com/",
+    href: "https://github.com/Synergy738/Projects/tree/main/Python%20Projects/traffic%20(small)",
     blurb:
       "A convolutional network that identifies traffic signs in photographs at 95% accuracy. OpenCV preprocesses and resizes the GTSRB dataset; the CNN stacks convolutional and pooling layers. The hard part was overfitting — dropout layers moved the needle most.",
   },
@@ -68,7 +68,7 @@ export const projects = [
     title: "PageRank",
     kind: "Harvard CS50AI",
     stack: ["Python", "Markov Chains", "Iterative Algorithms"],
-    href: "https://github.com/",
+    href: "https://github.com/Synergy738/Projects/tree/main/Python%20Projects/pagerank",
     blurb:
       "Ranks web pages by link structure, two ways: a random-surfer sampler that estimates rank by visit frequency, and the iterative formula that converges on it. Both land in the same place — which is the point.",
   },
@@ -76,7 +76,7 @@ export const projects = [
     title: "Workout Tracker Database",
     kind: "Harvard CS50 SQL",
     stack: ["SQL", "SQLite", "Schema Design", "Views", "Indexes"],
-    href: "https://github.com/",
+    href: "https://github.com/Synergy738/Projects/tree/main/SQL%20Projects/Harvard_Final_Project",
     blurb:
       "Four related tables for users, workouts, exercises and progress, with constraints, indexes on hot columns and three views for the common reads. The schema assumes individual workouts — collaborative sessions would want a many-to-many redesign.",
   },
