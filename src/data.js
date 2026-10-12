@@ -145,5 +145,5 @@ export const certs = [
   { name: "Java I", org: "Georgia Tech", mark: "98%", date: "Jun 2023" },
   { name: "Computational Thinking & Data Science", org: "MIT", mark: "94%", date: "May 2023" },
   { name: "Intro to CS & Python", org: "MIT", mark: "88%", date: "Mar 2023" },
-  { name: "Web Development", org: "Stellenberg High School", mark: "", date: "Aug 2022" },
+  { name: "Web Development", org: "Stellenberg High School", mark: "90%", date: "Aug 2022" },
 ];
