@@ -64,6 +64,8 @@ function sheen(e) {
   s.setProperty("--sy", y * 100 + "%");
   s.setProperty("--rx", (0.5 - y) * 10 + "deg");
   s.setProperty("--ry", (x - 0.5) * 12 + "deg");
+  // 0 at the centre, 1 at an edge: the border glow brightens as the cursor nears it
+  s.setProperty("--near", Math.max(Math.abs(x - 0.5), Math.abs(y - 0.5)) * 2);
 }
 
 function resetSheen(e) {

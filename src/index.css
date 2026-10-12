@@ -1098,3 +1098,25 @@ footer {
 
 /* orgs without a published logo get their name in Cinzel instead */
 .crest-name { font-family: "Cinzel", serif; font-size: 1.1rem; letter-spacing: 0.08em; color: #c9ced6; }
+
+/* Border glow (after React Bits): a silver ring that follows the cursor, brighter near the edges. */
+.cert::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  background: radial-gradient(
+    260px circle at var(--sx, 50%) var(--sy, 50%),
+    rgba(255, 255, 255, calc(0.35 + var(--near, 0) * 0.65)),
+    rgba(160, 175, 200, 0.25) 40%,
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  filter: drop-shadow(0 0 6px rgba(220, 230, 245, calc(var(--near, 0) * 0.8)));
+}
+.cert:hover::before { opacity: 1; }
