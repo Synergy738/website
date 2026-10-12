@@ -29,7 +29,7 @@ export const skills = [
 
 export const experience = [
   {
-    role: "Full-Stack Developer",
+    role: "Front-End Developer",
     company: "Temo Digital",
     where: "Cape Town",
     when: "Jun 2026 — Present",
@@ -117,13 +117,13 @@ export const projects = [
 // Drop an official logo at public/logos/<slug>.svg (or .png — change ext below)
 // and the card uses it. Until then the card shows the monogram.
 export const orgs = {
-  "Microsoft": { slug: "microsoft", mono: "MS" },
-  "Amazon Web Services": { slug: "aws", mono: "AWS" },
-  "Harvard University": { slug: "harvard", mono: "H" },
-  "NYU Tandon": { slug: "nyu", mono: "NYU" },
-  "MIT": { slug: "mit", mono: "MIT" },
-  "Georgia Tech": { slug: "georgia-tech", mono: "GT" },
-  "Board Infinity": { slug: "board-infinity", mono: "BI" },
+  "Microsoft": { slug: "microsoft" },
+  "Amazon Web Services": { slug: "aws" },
+  "Harvard University": { slug: "harvard" },
+  "NYU Tandon": { slug: "nyu" },
+  "MIT": { slug: "mit" },
+  "Georgia Tech": { slug: "georgia-tech" },
+  "Board Infinity": { slug: "board-infinity" },
 };
 
 export const certs = [

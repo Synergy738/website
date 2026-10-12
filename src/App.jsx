@@ -271,7 +271,6 @@ function Shot({ project }) {
 
 function CertCard({ cert }) {
   const org = orgs[cert.org];
-  const [hasLogo, setHasLogo] = useState(true);
   return (
     <article
       className="cert cursor-target"
@@ -280,11 +279,8 @@ function CertCard({ cert }) {
       data-reveal
     >
       <div className="crest">
-        {hasLogo ? (
-          <img src={`/logos/${org.slug}.svg`} alt={cert.org} onError={() => setHasLogo(false)} />
-        ) : (
-          <span className="mono chrome-text">{org.mono}</span>
-        )}
+        {/* the logo masks a chrome gradient, so every brand reads in the same metal */}
+        <span role="img" aria-label={cert.org} style={{ "--logo": `url(/logos/${org.slug}.svg)` }} />
       </div>
       <p className="org">{cert.org}</p>
       <h3>{cert.name}</h3>

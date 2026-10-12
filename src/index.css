@@ -845,21 +845,13 @@ h1 {
   margin-bottom: 1.6rem;
 }
 
-.crest img {
-  max-height: 64px;
-  max-width: 70%;
-  object-fit: contain;
-  /* Force any logo into the monochrome silver palette. */
-  filter: grayscale(1) brightness(1.6) contrast(0.9);
+.crest span {
+  width: 70%;
+  height: 56px;
+  background: linear-gradient(160deg, #fff 0%, #9aa3af 45%, #e9edf2 60%, #5b6270 100%);
+  -webkit-mask: var(--logo) left center / contain no-repeat;
+  mask: var(--logo) left center / contain no-repeat;
   opacity: 0.85;
-}
-
-.mono {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 3.2rem;
-  line-height: 1;
-  letter-spacing: 0.04em;
 }
 
 .cert .org {
