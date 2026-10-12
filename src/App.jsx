@@ -281,9 +281,9 @@ function CertCard({ cert }) {
       data-reveal
     >
       <div className="crest">
-        {/* the logo masks a chrome gradient, so every brand reads in the same metal */}
+        {/* the logo masks a chrome gradient; universities keep their own colour */}
         {org ? (
-          <span role="img" aria-label={cert.org} style={{ "--logo": `url(/logos/${org.slug}.svg)` }} />
+          <span role="img" aria-label={cert.org} style={{ "--logo": `url(/logos/${org.slug}.svg)`, background: org.color }} />
         ) : (
           <b className="crest-name">{cert.org}</b>
         )}

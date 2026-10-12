@@ -119,10 +119,10 @@ export const projects = [
 export const orgs = {
   "Microsoft": { slug: "microsoft" },
   "Amazon Web Services": { slug: "aws" },
-  "Harvard University": { slug: "harvard" },
-  "NYU Tandon": { slug: "nyu" },
-  "MIT": { slug: "mit" },
-  "Georgia Tech": { slug: "georgia-tech" },
+  "Harvard University": { slug: "harvard", color: "#a51c30" },
+  "NYU Tandon": { slug: "nyu", color: "#57068c" },
+  "MIT": { slug: "mit", color: "#a31f34" },
+  "Georgia Tech": { slug: "georgia-tech", color: "#b3a369" },
   "Board Infinity": { slug: "board-infinity" },
   "Oracle": { slug: "oracle" },
 };
