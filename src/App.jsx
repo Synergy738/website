@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { me, skills, experience, projects, certs, orgs } from "./data";
 import DitherVeil from "./bits/DitherVeil";
 import ScrollExpand from "./bits/ScrollExpand";
-import ScrollReveal from "./bits/ScrollReveal";
 import ScrollFloat from "./bits/ScrollFloat";
 import OrbitImages from "./bits/OrbitImages";
 import ReachForStars from "./bits/ReachForStars";
@@ -128,64 +127,43 @@ export default function App() {
           </span>
         </section>
 
-        <section className="expand" aria-label="Interlude">
+        <section id="about" className="expand">
           <ScrollExpand
-            src="https://images.unsplash.com/photo-1786800185510-ee94f5d27f9b?q=80&w=2400&auto=format&fit=crop"
-            alt="Liquid chrome waves in deep black"
-            title="Forged in chrome"
+            src="/about-bg.svg"
+            alt=""
+            title="Who I am"
             scrollHint="Scroll"
-            mediaZoom={1.35}
+            mediaZoom={1.2}
             startRadius={2}
-            overlayScrim={1}
+            overlayScrim={0.7}
             useWindowScroll
           >
-            <p className="kicker">Full-stack &middot; Front to back</p>
-            <h2 className="chrome-text">Every pixel, every endpoint</h2>
-            <p>From the database to the last hover state, built to hold its shape under load.</p>
-          </ScrollExpand>
-        </section>
-
-        <section id="about" className="wrap">
-          <Heading numeral="II" title="About" />
-          <div className="about">
-            <div>
-              <ScrollReveal
-                baseOpacity={0.08}
-                enableBlur={false}
-                baseRotation={2}
-                blurStrength={6}
-                containerClassName="ethos-lead"
-              >
-                {me.manifesto[0]}
-              </ScrollReveal>
-              <div className="ethos" data-reveal>
-                {me.manifesto.slice(1).map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
-              </div>
+            <p className="kicker">II &middot; About</p>
+            <h2 className="chrome-text">Taught by the best</h2>
+            <div className="about-copy">
+              {me.manifesto.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
             </div>
-            <aside className="facts" data-reveal>
-              <dl>
-                <div>
-                  <dt>Certifications</dt>
-                  <dd className="chrome-text">{certs.length}</dd>
-                </div>
-                <div>
-                  <dt>Institutions</dt>
-                  <dd className="chrome-text">{CERT_ORGS.length}</dd>
-                </div>
-                <div>
-                  <dt>Average mark</dt>
-                  <dd className="chrome-text">{AVG_MARK}%</dd>
-                </div>
-                <div>
-                  <dt>Studying since</dt>
-                  <dd className="chrome-text">{Math.min(...certs.map((c) => +c.date.slice(-4)))}</dd>
-                </div>
-              </dl>
-              <p className="orgs">{CERT_ORGS.join(" · ")}</p>
-            </aside>
-          </div>
+            <dl className="facts">
+              <div>
+                <dt>Certifications</dt>
+                <dd className="chrome-text">{certs.length}</dd>
+              </div>
+              <div>
+                <dt>Institutions</dt>
+                <dd className="chrome-text">{CERT_ORGS.length}</dd>
+              </div>
+              <div>
+                <dt>Average mark</dt>
+                <dd className="chrome-text">{AVG_MARK}%</dd>
+              </div>
+              <div>
+                <dt>Studying since</dt>
+                <dd className="chrome-text">{Math.min(...certs.map((c) => +c.date.slice(-4)))}</dd>
+              </div>
+            </dl>
+          </ScrollExpand>
         </section>
 
         <section id="skills" className="wrap">

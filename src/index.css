@@ -375,24 +375,31 @@ h1 {
   margin: 1rem 0 1.4rem;
 }
 
-.expand .scroll-expand__overlay p:last-child {
-  max-width: 34rem;
-  color: var(--ink);
-}
+.about-copy { display: grid; gap: 0.9rem; max-width: 42rem; }
+.about-copy p { color: var(--ink); font-size: clamp(0.85rem, 1.1vw, 1rem); line-height: 1.75; }
 
-/* ── Ethos ─────────────────────────────────────────────────── */
-
-.ethos {
-  max-width: 44rem;
+.expand .facts {
   display: grid;
-  gap: 1.6rem;
+  grid-template-columns: repeat(4, auto);
+  gap: 0 clamp(1.5rem, 4vw, 4rem);
+  margin-top: clamp(1.5rem, 4vh, 3rem);
 }
-
-.ethos .lead {
+.facts dt {
+  font-size: 0.58rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 0.5rem;
+}
+.facts dd {
+  margin: 0;
   font-family: var(--display);
-  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
-  line-height: 1.5;
-  color: var(--silver);
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  line-height: 1;
+}
+@media (max-width: 599px) {
+  .expand .facts { grid-template-columns: repeat(2, auto); gap: 1rem 2rem; }
+  .about-copy p:nth-child(n + 2) { display: none; } /* phone height only fits the opening line */
 }
 
 /* ── Arsenal ───────────────────────────────────────────────── */
@@ -658,60 +665,6 @@ h1 {
     background: radial-gradient(40% 50% at 22% 50%, rgba(5, 5, 10, 0.7) 0%, transparent 100%),
       linear-gradient(180deg, transparent 70%, var(--void) 100%);
   }
-}
-
-/* ── Ethos ─────────────────────────────────────────────────── */
-
-/* ── About: the statement and story on the left, the numbers beside them ── */
-.about {
-  display: grid;
-  gap: clamp(3rem, 6vw, 6rem);
-}
-@media (min-width: 1000px) {
-  .about { grid-template-columns: minmax(0, 1.6fr) minmax(17rem, 1fr); align-items: start; }
-  .facts { position: sticky; top: 18vh; }
-}
-
-.ethos-lead { margin: 0 0 3rem; }
-
-.ethos-lead .scroll-reveal-text {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
-  line-height: 1.35;
-  color: var(--silver);
-}
-
-.ethos { padding-left: 1.6rem; border-left: 1px solid var(--edge-hot); }
-.ethos p { color: var(--ink); font-size: 1.05rem; line-height: 1.8; max-width: 46rem; }
-
-.facts dl {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-top: 1px solid var(--edge);
-}
-.facts dl > div { padding: 1.6rem 0; border-bottom: 1px solid var(--edge); }
-.facts dl > div:nth-child(even) { padding-left: 1.6rem; border-left: 1px solid var(--edge); }
-.facts dt {
-  font-size: 0.58rem;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  margin-bottom: 0.7rem;
-}
-.facts dd {
-  margin: 0;
-  font-family: var(--display);
-  font-size: clamp(2.2rem, 4vw, 3.4rem);
-  line-height: 1;
-}
-.facts .orgs {
-  margin-top: 1.6rem;
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  line-height: 2.2;
-  text-transform: uppercase;
-  color: var(--ink-dim);
 }
 
 /* ── Work (scroll timeline) ─────────────────────────────────── */
