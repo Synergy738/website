@@ -124,14 +124,17 @@ export const orgs = {
   "MIT": { slug: "mit" },
   "Georgia Tech": { slug: "georgia-tech" },
   "Board Infinity": { slug: "board-infinity" },
+  "Oracle": { slug: "oracle" },
 };
 
 export const certs = [
   { name: "Microsoft Azure Fundamentals", org: "Microsoft", mark: "73%", date: "Nov 2025" },
   { name: "AWS Certified AI Practitioner", org: "Amazon Web Services", mark: "81%", date: "Oct 2025" },
   { name: "Prompt Engineering for Microsoft 365 Copilot", org: "Microsoft", mark: "100%", date: "Jun 2025" },
+  { name: "Java Certified Foundations Associate", org: "Oracle", mark: "", date: "Oct 2024" },
   { name: "CS50 Cybersecurity", org: "Harvard University", mark: "81%", date: "Nov 2024" },
   { name: "CS50 SQL", org: "Harvard University", mark: "95%", date: "Nov 2024" },
+  { name: "Java Foundations", org: "On The Ball College", mark: "", date: "Jun 2024" },
   { name: "Data Science: R Basics", org: "Harvard University", mark: "94%", date: "Mar 2024" },
   { name: "Cybersecurity Specialization", org: "NYU Tandon", mark: "87%", date: "Feb 2024" },
   { name: "CS50AI", org: "Harvard University", mark: "86%", date: "Feb 2024" },
@@ -140,4 +143,5 @@ export const certs = [
   { name: "Java I", org: "Georgia Tech", mark: "98%", date: "Jun 2023" },
   { name: "Computational Thinking & Data Science", org: "MIT", mark: "94%", date: "May 2023" },
   { name: "Intro to CS & Python", org: "MIT", mark: "88%", date: "Mar 2023" },
+  { name: "Web Development", org: "Stellenberg High School", mark: "", date: "Aug 2022" },
 ];

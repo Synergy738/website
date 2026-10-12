@@ -280,7 +280,11 @@ function CertCard({ cert }) {
     >
       <div className="crest">
         {/* the logo masks a chrome gradient, so every brand reads in the same metal */}
-        <span role="img" aria-label={cert.org} style={{ "--logo": `url(/logos/${org.slug}.svg)` }} />
+        {org ? (
+          <span role="img" aria-label={cert.org} style={{ "--logo": `url(/logos/${org.slug}.svg)` }} />
+        ) : (
+          <b className="crest-name">{cert.org}</b>
+        )}
       </div>
       <p className="org">{cert.org}</p>
       <h3>{cert.name}</h3>

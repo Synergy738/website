@@ -1095,3 +1095,6 @@ footer {
 @media (max-width: 899px) {
   .rail { display: none; }
 }
+
+/* orgs without a published logo get their name in Cinzel instead */
+.crest-name { font-family: "Cinzel", serif; font-size: 1.1rem; letter-spacing: 0.08em; color: #c9ced6; }
