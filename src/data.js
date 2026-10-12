@@ -129,7 +129,7 @@ export const orgs = {
 
 export const certs = [
   { name: "Microsoft Azure Fundamentals", org: "Microsoft", mark: "73%", date: "Nov 2025" },
-  { name: "AWS Certified AI Practitioner", org: "Amazon Web Services", mark: "81%", date: "Oct 2025" },
+  { name: "AWS Certified AI Practitioner", org: "Amazon Web Services", mark: "81%", date: "Jul 2025" },
   { name: "Prompt Engineering for Microsoft 365 Copilot", org: "Microsoft", mark: "100%", date: "Jun 2025" },
   { name: "Java Certified Foundations Associate", org: "Oracle", mark: "", date: "Oct 2024" },
   { name: "CS50 Cybersecurity", org: "Harvard University", mark: "81%", date: "Nov 2024" },
@@ -139,6 +139,8 @@ export const certs = [
   { name: "Cybersecurity Specialization", org: "NYU Tandon", mark: "87%", date: "Feb 2024" },
   { name: "CS50AI", org: "Harvard University", mark: "86%", date: "Feb 2024" },
   { name: "Microservices & Deployment with ASP.NET", org: "Board Infinity", mark: "95%", date: "Dec 2023" },
+  { name: "Advanced Java", org: "Board Infinity", mark: "", date: "Dec 2023" },
+  { name: "C# Class Development", org: "Board Infinity", mark: "", date: "Nov 2023" },
   { name: "Java II", org: "Georgia Tech", mark: "83%", date: "Aug 2023" },
   { name: "Java I", org: "Georgia Tech", mark: "98%", date: "Jun 2023" },
   { name: "Computational Thinking & Data Science", org: "MIT", mark: "94%", date: "May 2023" },
