@@ -114,15 +114,15 @@ function ContactForm() {
     <form className="contact-form" onSubmit={submit}>
       <label>
         <span>Name</span>
-        <input name="name" required maxLength={100} autoComplete="name" />
+        <input className="cursor-target" name="name" required maxLength={100} autoComplete="name" />
       </label>
       <label>
         <span>Email</span>
-        <input name="email" type="email" required maxLength={200} autoComplete="email" />
+        <input className="cursor-target" name="email" type="email" required maxLength={200} autoComplete="email" />
       </label>
       <label className="wide">
         <span>Message</span>
-        <textarea name="message" required maxLength={5000} rows={4} />
+        <textarea className="cursor-target" name="message" required maxLength={5000} rows={4} />
       </label>
       {/* honeypot: people never see it, bots fill it in */}
       <input name="company" tabIndex={-1} autoComplete="off" className="hp" aria-hidden="true" />
