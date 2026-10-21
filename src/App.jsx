@@ -323,9 +323,9 @@ function CertCarousel() {
         })}
       </div>
       <div className="deck-nav">
-        <button onClick={() => go(-1)} aria-label="Previous certification">&larr;</button>
+        <button className="cursor-target" onClick={() => go(-1)} aria-label="Previous certification">&larr;</button>
         <span>{String(i + 1).padStart(2, "0")} / {n}</span>
-        <button onClick={() => go(1)} aria-label="Next certification">&rarr;</button>
+        <button className="cursor-target" onClick={() => go(1)} aria-label="Next certification">&rarr;</button>
       </div>
       {/* native dialog: Esc, focus trap and backdrop for free; click outside closes */}
       <dialog ref={dlg} className="cert-modal" onClick={(e) => e.target === dlg.current && dlg.current.close()}>

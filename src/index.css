@@ -1139,8 +1139,8 @@ footer {
 }
 .slide .cert { height: 100%; background-color: #0d0e11; }
 .deck-nav { display: flex; justify-content: center; align-items: center; gap: 1.6rem; margin-top: 1.6rem; color: var(--ink-dim); letter-spacing: 0.2em; font-size: 0.8rem; }
-.deck-nav button { background: none; border: 1px solid var(--edge); color: var(--silver); width: 44px; height: 44px; border-radius: 0; font-size: 1.1rem; cursor: pointer; transition: border-color 0.3s; }
-.deck-nav button:hover { border-color: var(--silver); }
+.deck-nav button { background: none; border: 1px solid var(--edge); color: var(--silver); width: 44px; height: 44px; border-radius: 0; font-size: 1.1rem; cursor: pointer; transition: background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s; }
+.deck-nav button:hover { background: var(--silver); color: var(--void); border-color: var(--silver); box-shadow: 0 0 40px rgba(200, 215, 235, 0.35); }
 
 /* ── Certification modal ───────────────────────────────────── */
 
@@ -1171,7 +1171,6 @@ footer {
   .cert-modal[open] { translate: 0 16px; scale: 0.97; }
 }
 .btn-ghost { margin-left: 0.8rem; background: transparent; border-color: transparent; }
-.btn-ghost:hover { border-color: var(--edge); }
 .cert-modal, .cert-modal * { cursor: none; }
 
 /* ── Section backdrops: faint chrome dot-grid with hairlines, alternating glow side ── */
