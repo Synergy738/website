@@ -661,10 +661,10 @@ h1 {
   }
 
   .hero-veil {
-    left: 34%;
+    left: 42%;
     scale: 1.3;
     transform-origin: 60% 100%;
-    translate: 0 22%;
+    translate: 0 calc(22% - 40px);
   }
 
   .hero::after {
