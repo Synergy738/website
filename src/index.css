@@ -1229,3 +1229,8 @@ body:has(.stars-stage:is(.play, .up, .title)) .target-cursor-wrapper { opacity: 
 @media (max-width: 599px) {
   main :is(p, .about-copy, .blurb, .note, #experience li, .cert-modal p, .contact-form input, .contact-form textarea):not(.kicker, .kind, .org, .when, .at, .eyebrow, .hero-role, .chrome-text) { font-size: 15px; }
 }
+@media (max-width: 599px) {
+  .sec-head, #skills .sec-head { flex-direction: column; align-items: center; gap: 0.4rem; text-align: center; }
+  .sec-head .rule { display: none; }
+  .stars-copy h2 { text-align: center; }
+}
