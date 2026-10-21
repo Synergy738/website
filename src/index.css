@@ -1141,3 +1141,20 @@ footer {
 .deck-nav { display: flex; justify-content: center; align-items: center; gap: 1.6rem; margin-top: 1.6rem; color: var(--ink-dim); letter-spacing: 0.2em; font-size: 0.8rem; }
 .deck-nav button { background: none; border: 1px solid var(--edge); color: var(--silver); width: 44px; height: 44px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; transition: border-color 0.3s; }
 .deck-nav button:hover { border-color: var(--silver); }
+
+/* ── Certification modal ───────────────────────────────────── */
+
+.cert-modal {
+  margin: auto;
+  width: min(92vw, 34rem);
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  background: #0d0e11;
+  color: var(--ink);
+  border: 1px solid var(--edge);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+}
+.cert-modal::backdrop { background: rgba(3, 3, 6, 0.75); backdrop-filter: blur(4px); }
+.cert-modal .eyebrow { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; opacity: 0.6; }
+.cert-modal h3 { font-family: var(--display); font-size: clamp(1.3rem, 4vw, 1.8rem); margin: 0.5rem 0 1rem; }
+.cert-modal-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.8rem; }
+.slide[aria-hidden="false"] { cursor: pointer; }

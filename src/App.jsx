@@ -270,7 +270,9 @@ function Shot({ project }) {
 function CertCarousel() {
   const [i, setI] = useState(0);
   const x0 = useRef(0);
+  const dlg = useRef(null);
   const n = certs.length;
+  const c = certs[i];
   const go = (d) => setI((v) => (v + d + n) % n);
   return (
     <div className="deck-wrap">
@@ -279,11 +281,12 @@ function CertCarousel() {
         tabIndex={0}
         aria-roledescription="carousel"
         aria-label="Certifications"
-        onKeyDown={(e) => e.key === "ArrowLeft" ? go(-1) : e.key === "ArrowRight" && go(1)}
+        onKeyDown={(e) => e.key === "ArrowLeft" ? go(-1) : e.key === "ArrowRight" ? go(1) : e.key === "Enter" && dlg.current.showModal()}
         onPointerDown={(e) => (x0.current = e.clientX)}
         onPointerUp={(e) => {
           const dx = e.clientX - x0.current;
           if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+          else x0.current = null;
         }}
       >
         {certs.map((c, k) => {
@@ -296,7 +299,7 @@ function CertCarousel() {
               className="slide"
               style={{ "--o": o, "--a": a, zIndex: n - a, opacity: a > 2 ? 0 : 1, visibility: a > 2 ? "hidden" : undefined }}
               aria-hidden={o !== 0}
-              onClick={() => o && setI(k)}
+              onClick={() => x0.current === null && (o ? setI(k) : dlg.current.showModal())}
             >
               <CertCard cert={c} />
             </div>
@@ -308,6 +311,16 @@ function CertCarousel() {
         <span>{String(i + 1).padStart(2, "0")} / {n}</span>
         <button onClick={() => go(1)} aria-label="Next certification">&rarr;</button>
       </div>
+      {/* native dialog: Esc, focus trap and backdrop for free; click outside closes */}
+      <dialog ref={dlg} className="cert-modal" onClick={(e) => e.target === dlg.current && dlg.current.close()}>
+        <p className="eyebrow">{c.org} · {c.date}{c.mark && ` · ${c.mark}`}</p>
+        <h3>{c.name}</h3>
+        <p>{c.about || "Details coming soon."}</p>
+        <div className="cert-modal-actions">
+          {c.url && <a className="btn" href={c.url} target="_blank" rel="noreferrer">View certificate</a>}
+          <button className="btn" onClick={() => dlg.current.close()}>Close</button>
+        </div>
+      </dialog>
     </div>
   );
 }
