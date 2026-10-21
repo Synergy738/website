@@ -115,9 +115,7 @@ export default function App() {
           <div className={"hero-copy" + (heroIn ? " in" : "")}>
             <p className="kicker">Cape Town &middot; South Africa</p>
             <h1 className="chrome-text">
-              Blũ
-              <br />
-              Dennis
+              Blũ Dennis
             </h1>
             <p className="hero-role">{me.role}</p>
             <a className="btn cursor-target" href="#contact">

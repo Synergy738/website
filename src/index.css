@@ -221,9 +221,11 @@ a {
 h1 {
   font-family: var(--display);
   font-weight: 400;
-  font-size: clamp(2.8rem, min(10vw, 13svh), 7.5rem);
+  font-size: clamp(2.2rem, min(6.4vw, 13svh), 7.5rem);
   line-height: 0.92;
   padding-top: 0.12em;
+  white-space: nowrap;
+  margin-left: -0.06em; /* cancel the B's side bearing so it lines up with the kicker */
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
