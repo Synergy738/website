@@ -26,8 +26,11 @@ export default function ReachForStars() {
       // fires once the section's top is in the upper quarter of the screen, so the clip is seen from its start
       { rootMargin: "0px 0px -75% 0px" }
     );
+    // buffer the clip only when the section is ~2 screens away, so it doesn't fight the first load
+    const near = new IntersectionObserver(([e]) => e.isIntersecting && (video.current.preload = "auto", near.disconnect()), { rootMargin: "200% 0px" });
     io.observe(stage.current);
-    return () => io.disconnect();
+    near.observe(stage.current);
+    return () => (io.disconnect(), near.disconnect());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // timers, not animationend: a backgrounded tab freezes animations, and the form must still arrive
@@ -53,7 +56,7 @@ export default function ReachForStars() {
             src="/intro.mp4"
             muted
             playsInline
-            preload="auto"
+            preload="metadata"
             onTimeUpdate={(e) => e.currentTarget.currentTime > 3.1 && lookUp()}
             onEnded={lookUp}
             onError={() => setPhase("form")}
