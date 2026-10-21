@@ -1224,3 +1224,8 @@ section.wrap + section.wrap::after {
 /* no cursor while the contact scene plays */
 .target-cursor-wrapper { transition: opacity 0.4s; }
 body:has(.stars-stage:is(.play, .up, .title)) .target-cursor-wrapper { opacity: 0; }
+
+/* phones: body copy at a readable 15px (labels keep their own class sizes) */
+@media (max-width: 599px) {
+  main :is(p, .about-copy, .blurb, .note, #experience li, .cert-modal p, .contact-form input, .contact-form textarea):not(.kicker, .kind, .org, .when, .at, .eyebrow, .hero-role, .chrome-text) { font-size: 15px; }
+}

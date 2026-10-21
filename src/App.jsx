@@ -78,7 +78,7 @@ function resetSheen(e) {
 export default function App() {
   useScrollTriggerRefresh();
   const navRef = useActiveSection();
-  const finePointer = typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches;
+  const finePointer = typeof window !== "undefined" && window.matchMedia("(pointer: fine) and (min-width: 600px)").matches;
   const [heroIn, setHeroIn] = useState(false);
 
   return (
