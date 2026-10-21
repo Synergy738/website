@@ -530,7 +530,9 @@ h1 {
   align-items: center;
 }
 @media (min-width: 1000px) {
-  .projects { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+  .projects { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+  .projects .swap-stage { order: -1; }
+  .projects .card-swap { left: -22%; }
 }
 
 .project-info { max-width: 32rem; animation: fade-in 0.8s ease both; }
