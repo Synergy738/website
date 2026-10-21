@@ -29,6 +29,8 @@ const SECTIONS = [
 // ScrollTrigger measures once; ScrollExpand and late images change the page height after that.
 function useScrollTriggerRefresh() {
   useEffect(() => {
+    // the phone URL bar showing/hiding must not re-lay out pins mid-scroll
+    ScrollTrigger.config({ ignoreMobileResize: true });
     const ro = new ResizeObserver(() => ScrollTrigger.refresh());
     ro.observe(document.body);
     return () => ro.disconnect();
@@ -294,8 +296,9 @@ function CertCarousel() {
   const st = useRef(null);
   useEffect(() => {
     st.current = ScrollTrigger.create({
-      trigger: wrap.current.closest("section"),
-      start: "top top",
+      // the deck itself pins, centred on screen, at any screen height
+      trigger: wrap.current,
+      start: "center center",
       end: `+=${n * 140}`,
       pin: true,
       onUpdate: (t) => setI(Math.round(t.progress * (n - 1))),

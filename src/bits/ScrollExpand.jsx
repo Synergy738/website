@@ -166,7 +166,12 @@ const ScrollExpand = ({
       kick();
     };
 
+    // phones resize the viewport as the URL bar slides away; re-measuring then resizes the
+    // track mid-scroll and yanks the page, so only width changes count
+    let lastW = 0;
     const onResize = () => {
+      if (lastW && root.clientWidth === lastW && matchMedia('(pointer: coarse)').matches) return;
+      lastW = root.clientWidth;
       measure();
       target = readProgress();
       current = target;
