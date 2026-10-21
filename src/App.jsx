@@ -121,6 +121,9 @@ export default function App() {
             <a className="btn cursor-target" href="#contact">
               Get in touch
             </a>
+            <a className="btn btn-ghost cursor-target" href="/Blu_Dennis_CV.pdf" download>
+              Download CV
+            </a>
           </div>
 
           <span className="scroll-hint" aria-hidden="true">

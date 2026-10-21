@@ -1158,3 +1158,17 @@ footer {
 .cert-modal h3 { font-family: var(--display); font-size: clamp(1.3rem, 4vw, 1.8rem); margin: 0.5rem 0 1rem; }
 .cert-modal-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.8rem; }
 .slide[aria-hidden="false"] { cursor: pointer; }
+/* open/close fade + lift; closing is animated via allow-discrete */
+.cert-modal, .cert-modal::backdrop {
+  transition: opacity 0.35s ease, translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), scale 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    overlay 0.35s allow-discrete, display 0.35s allow-discrete;
+  opacity: 0;
+}
+.cert-modal { translate: 0 16px; scale: 0.97; }
+.cert-modal[open], .cert-modal[open]::backdrop { opacity: 1; translate: 0 0; scale: 1; }
+@starting-style {
+  .cert-modal[open], .cert-modal[open]::backdrop { opacity: 0; }
+  .cert-modal[open] { translate: 0 16px; scale: 0.97; }
+}
+.btn-ghost { margin-left: 0.8rem; background: transparent; border-color: transparent; }
+.btn-ghost:hover { border-color: var(--edge); }
