@@ -134,7 +134,6 @@ export const certs = [
   { name: "Java Certified Foundations Associate", org: "Oracle", mark: "", date: "Oct 2024" },
   { name: "CS50 Cybersecurity", org: "Harvard University", mark: "81%", date: "Nov 2024", url: "https://courses.edx.org/certificates/8c98691ddf4f413e886e57486cef5085", about: "Hands-on labs, secure coding, and systems-level security concepts." },
   { name: "CS50 SQL", org: "Harvard University", mark: "95%", date: "Nov 2024", url: "https://courses.edx.org/certificates/60c14bfcfe354d519d0575bf51224381", about: "Relational databases, joins, indexing, and query optimisation." },
-  { name: "Java Foundations", org: "On The Ball College", mark: "", date: "Jun 2024" },
   { name: "Data Science: R Basics", org: "Harvard University", mark: "94%", date: "Mar 2024", url: "https://courses.edx.org/certificates/981e9e75b38145d8b53b4badeef0c052", about: "Introductory R programming and data wrangling." },
   { name: "Cybersecurity Specialization", org: "NYU Tandon", mark: "87%", date: "Feb 2024", url: "https://coursera.org/share/70a144b9856231e090442005500994e2", about: "Multi-course specialisation: threat modelling, cryptography, and network security." },
   { name: "CS50AI", org: "Harvard University", mark: "86%", date: "Feb 2024", url: "https://cs50.harvard.edu/certificates/f27a5d40-d20e-4709-9d6a-ae644e07d978", about: "Advanced AI concepts, Python, search algorithms, neural networks." },
