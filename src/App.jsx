@@ -297,9 +297,9 @@ function CertCarousel() {
   const st = useRef(null);
   useEffect(() => {
     st.current = ScrollTrigger.create({
-      // the deck itself pins, centred on screen, at any screen height
-      trigger: wrap.current,
-      start: "center center",
+      // whole section pins: centred if it fits, else top-aligned
+      trigger: wrap.current.closest("section"),
+      start: () => (wrap.current.closest("section").offsetHeight > innerHeight ? "top top" : "center center"),
       end: `+=${n * 140}`,
       pin: true,
       onUpdate: (t) => setI(Math.round(t.progress * (n - 1))),
