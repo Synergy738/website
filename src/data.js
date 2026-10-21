@@ -9,7 +9,7 @@ export const me = {
   links: [
     { label: "GitHub", href: "https://github.com/", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/github/github-original.svg" },
     { label: "LinkedIn", href: "https://linkedin.com/", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/linkedin/linkedin-plain.svg" },
-    { label: "workwithme.org.za", href: "https://workwithme.org.za", icon: "/globe.svg" },
+    { label: "bludennis.co.za", href: "https://www.bludennis.co.za", icon: "/globe.svg" },
   ],
   manifesto: [
     "I didn't take the usual path into software development. No formal campus, no fixed syllabus — just a decision to learn from the best teachers I could find.",
