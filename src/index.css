@@ -1172,3 +1172,4 @@ footer {
 }
 .btn-ghost { margin-left: 0.8rem; background: transparent; border-color: transparent; }
 .btn-ghost:hover { border-color: var(--edge); }
+.cert-modal, .cert-modal * { cursor: none; }

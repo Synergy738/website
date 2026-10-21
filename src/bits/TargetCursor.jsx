@@ -407,7 +407,7 @@ const TargetCursor = ({
   }
 
   return createPortal(
-    <div ref={cursorRef} className="target-cursor-wrapper">
+    <div ref={cursorRef} className="target-cursor-wrapper" popover="manual">
       <div ref={dotRef} className="target-cursor-dot" style={{ backgroundColor: cursorColor }} />
       <div className="target-cursor-corner corner-tl" style={{ borderColor: cursorColor }} />
       <div className="target-cursor-corner corner-tr" style={{ borderColor: cursorColor }} />

@@ -276,6 +276,13 @@ function CertCarousel() {
   const dlg = useRef(null);
   const n = certs.length;
   const c = certs[i];
+  // a modal dialog sits in the top layer; re-raise the cursor popover above it
+  const open = () => {
+    dlg.current.showModal();
+    const cur = document.querySelector(".target-cursor-wrapper");
+    cur?.hidePopover?.();
+    cur?.showPopover?.();
+  };
   const go = (d) => setI((v) => (v + d + n) % n);
   return (
     <div className="deck-wrap">
@@ -284,7 +291,7 @@ function CertCarousel() {
         tabIndex={0}
         aria-roledescription="carousel"
         aria-label="Certifications"
-        onKeyDown={(e) => e.key === "ArrowLeft" ? go(-1) : e.key === "ArrowRight" ? go(1) : e.key === "Enter" && dlg.current.showModal()}
+        onKeyDown={(e) => e.key === "ArrowLeft" ? go(-1) : e.key === "ArrowRight" ? go(1) : e.key === "Enter" && open()}
         onPointerDown={(e) => (x0.current = e.clientX)}
         onPointerUp={(e) => {
           const dx = e.clientX - x0.current;
@@ -302,7 +309,7 @@ function CertCarousel() {
               className="slide"
               style={{ "--o": o, "--a": a, zIndex: n - a, opacity: a > 2 ? 0 : 1, visibility: a > 2 ? "hidden" : undefined }}
               aria-hidden={o !== 0}
-              onClick={() => x0.current === null && (o ? setI(k) : dlg.current.showModal())}
+              onClick={() => x0.current === null && (o ? setI(k) : open())}
             >
               <CertCard cert={c} />
             </div>
@@ -320,8 +327,8 @@ function CertCarousel() {
         <h3>{c.name}</h3>
         <p>{c.about || "Details coming soon."}</p>
         <div className="cert-modal-actions">
-          {c.url && <a className="btn" href={c.url} target="_blank" rel="noreferrer">View certificate</a>}
-          <button className="btn" onClick={() => dlg.current.close()}>Close</button>
+          {c.url && <a className="btn cursor-target" href={c.url} target="_blank" rel="noreferrer">View certificate</a>}
+          <button className="btn cursor-target" onClick={() => dlg.current.close()}>Close</button>
         </div>
       </dialog>
     </div>
