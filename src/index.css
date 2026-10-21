@@ -1216,3 +1216,7 @@ section.wrap + section.wrap::after {
 .project-info > :nth-child(5) { animation-delay: 0.24s; }
 @keyframes info-in { from { opacity: 0; translate: 0 18px; filter: blur(6px); } }
 @media (prefers-reduced-motion: reduce) { .project-info > * { animation: none; } }
+
+/* no cursor while the contact scene plays */
+.target-cursor-wrapper { transition: opacity 0.4s; }
+body:has(.stars-stage:is(.play, .up, .title)) .target-cursor-wrapper { opacity: 0; }
