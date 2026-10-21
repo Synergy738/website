@@ -14,7 +14,7 @@ const CERT_ORGS = [...new Set(certs.map((c) => c.org))];
 const MARKS = certs.filter((c) => c.mark).map((c) => parseFloat(c.mark));
 const AVG_MARK = Math.round(MARKS.reduce((a, b) => a + b, 0) / MARKS.length);
 
-const BUST = "https://images.unsplash.com/photo-1737071371043-761e02b1ef95?q=80&w=1400&auto=format&fit=crop";
+const BUST = "/hero.webp";
 
 const SECTIONS = [
   ["home", "I"],
