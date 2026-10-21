@@ -289,9 +289,27 @@ function CertCarousel() {
     cur?.hidePopover?.();
     cur?.showPopover?.();
   };
-  const go = (d) => setI((v) => (v + d + n) % n);
+  // the section pins and scrolling steps through the deck; arrows, keys and clicks scroll to the card
+  const wrap = useRef(null);
+  const st = useRef(null);
+  useEffect(() => {
+    st.current = ScrollTrigger.create({
+      trigger: wrap.current.closest("section"),
+      start: "top top",
+      end: `+=${n * 140}`,
+      pin: true,
+      onUpdate: (t) => setI(Math.round(t.progress * (n - 1))),
+    });
+    return () => st.current.kill();
+  }, [n]);
+  const seek = (k) => {
+    const t = st.current;
+    k = Math.max(0, Math.min(n - 1, k));
+    window.scrollTo({ top: t.start + (k / (n - 1)) * (t.end - t.start), behavior: "smooth" });
+  };
+  const go = (d) => seek(i + d);
   return (
-    <div className="deck-wrap">
+    <div className="deck-wrap" ref={wrap}>
       <div
         className="deck"
         tabIndex={0}
@@ -315,7 +333,7 @@ function CertCarousel() {
               className="slide"
               style={{ "--o": o, "--a": a, zIndex: n - a, opacity: a > 2 ? 0 : 1, visibility: a > 2 ? "hidden" : undefined }}
               aria-hidden={o !== 0}
-              onClick={() => x0.current === null && (o ? setI(k) : open())}
+              onClick={() => x0.current === null && (o ? seek(k) : open())}
             >
               <CertCard cert={c} />
             </div>
