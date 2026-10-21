@@ -420,9 +420,8 @@ function Arsenal() {
 
       <ul className="groups">
         {skills.map((s, i) => (
-          <li key={s.group} className={i === open ? "open" : ""} data-reveal>
+          <li key={s.group} className={"cursor-target" + (i === open ? " open" : "")} data-reveal>
             <button
-              className="cursor-target"
               aria-expanded={i === open}
               onClick={() => setOpen(i)}
               onPointerEnter={() => setOpen(i)}
