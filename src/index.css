@@ -1173,3 +1173,32 @@ footer {
 .btn-ghost { margin-left: 0.8rem; background: transparent; border-color: transparent; }
 .btn-ghost:hover { border-color: var(--edge); }
 .cert-modal, .cert-modal * { cursor: none; }
+
+/* ── Section backdrops: faint chrome dot-grid with hairlines, alternating glow side ── */
+section.wrap { position: relative; isolation: isolate; }
+section.wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 50%;
+  width: 100vw;
+  translate: -50% 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, rgba(233, 237, 242, 0.24) 1px, transparent 1.4px) 0 0 / 28px 28px,
+    linear-gradient(rgba(233, 237, 242, 0.06) 1px, transparent 1px) 0 0 / 140px 140px,
+    linear-gradient(90deg, rgba(233, 237, 242, 0.06) 1px, transparent 1px) 0 0 / 140px 140px,
+    radial-gradient(60% 50% at var(--glow, 85%) 30%, rgba(140, 150, 170, 0.12), transparent 70%);
+  mask: radial-gradient(75% 65% at var(--glow, 85%) 40%, #000 20%, transparent 85%);
+}
+section.wrap:nth-of-type(odd) { --glow: 15%; }
+section.wrap + section.wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(60vw, 900px);
+  height: 1px;
+  translate: -50% 0;
+  background: linear-gradient(90deg, transparent, rgba(233, 237, 242, 0.25), transparent);
+}
