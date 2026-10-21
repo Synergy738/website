@@ -89,6 +89,7 @@ export default function App() {
       <div className="grain" aria-hidden="true" />
       <div className="vignette" aria-hidden="true" />
 
+      <a href="#home" className="to-top cursor-target" aria-label="Back to top">&uarr;</a>
       <nav className="rail" ref={navRef} aria-label="Sections">
         {SECTIONS.map(([id, numeral]) => (
           <a key={id} href={"#" + id} className="cursor-target">
