@@ -225,6 +225,7 @@ function Projects() {
   const [front, setFront] = useState(0);
   const show = useCallback((i) => setFront(i), []);
   const p = projects[front];
+  const step = useRef(() => {});
   return (
     <div className="projects">
       <div className="project-info" key={front} aria-live="polite">
@@ -241,11 +242,16 @@ function Projects() {
         </a>
       </div>
       <div className="swap-stage">
-        <CardSwap onFront={show}>
+        <CardSwap onFront={show} apiRef={step}>
           {projects.map((proj) => (
             <Shot key={proj.title} project={proj} />
           ))}
         </CardSwap>
+        <div className="deck-nav swap-nav">
+          <button className="cursor-target" onClick={() => step.current(-1)} aria-label="Previous project">&larr;</button>
+          <span>{String(front + 1).padStart(2, "0")} / {projects.length}</span>
+          <button className="cursor-target" onClick={() => step.current(1)} aria-label="Next project">&rarr;</button>
+        </div>
       </div>
     </div>
   );

@@ -1202,3 +1202,4 @@ section.wrap + section.wrap::after {
   translate: -50% 0;
   background: linear-gradient(90deg, transparent, rgba(233, 237, 242, 0.25), transparent);
 }
+.swap-nav { position: absolute; left: 0; right: 0; bottom: 0.5rem; margin: 0; z-index: 50; }

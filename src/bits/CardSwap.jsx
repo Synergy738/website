@@ -13,6 +13,7 @@ export default function CardSwap({
   delay = 5000,
   skewAmount = 5,
   onFront,
+  apiRef,
   children,
 }) {
   const cards = Children.toArray(children);
@@ -71,12 +72,15 @@ export default function CardSwap({
       start();
     };
 
+    // prev/next: pull the next or last card in the stack to the front
+    if (apiRef) apiRef.current = (d) => toFront.current(order.current[d > 0 ? 1 : n - 1]);
+
     start();
     return () => {
       clearInterval(timer);
       tl?.kill();
     };
-  }, [n, cardDistance, verticalDistance, delay, skewAmount, onFront]);
+  }, [n, cardDistance, verticalDistance, delay, skewAmount, onFront, apiRef]);
 
   return (
     <div
