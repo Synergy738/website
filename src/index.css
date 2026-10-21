@@ -77,6 +77,7 @@ a {
   left: 2rem;
   z-index: 50;
   translate: 0 -50%;
+  interpolate-size: allow-keywords;
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
@@ -105,6 +106,7 @@ a {
   width: 0;
   overflow: hidden;
   white-space: nowrap;
+  margin-right: -0.22em; /* drop the trailing letter-spacing so the cursor hugs the word */
   transition: width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -116,7 +118,7 @@ a {
 
 .rail a:hover .rail-label,
 .rail a.on .rail-label {
-  width: 9.5rem;
+  width: auto;
 }
 
 /* ── Chrome type ───────────────────────────────────────────── */

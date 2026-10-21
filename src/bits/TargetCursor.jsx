@@ -139,6 +139,19 @@ const TargetCursor = ({
       const cursorX = gsap.getProperty(cursorRef.current, 'x');
       const cursorY = gsap.getProperty(cursorRef.current, 'y');
 
+      // re-measure each frame so targets that grow on hover (the rail labels) stay wrapped
+      if (activeTarget) {
+        const r = activeTarget.getBoundingClientRect();
+        const { borderWidth: b, cornerSize: s } = constants;
+        const { x: ox, y: oy } = getOffset();
+        targetCornerPositionsRef.current = [
+          { x: r.left - b - ox, y: r.top - b - oy },
+          { x: r.right + b - s - ox, y: r.top - b - oy },
+          { x: r.right + b - s - ox, y: r.bottom + b - s - oy },
+          { x: r.left - b - ox, y: r.bottom + b - s - oy }
+        ];
+      }
+
       const corners = Array.from(cornersRef.current);
       corners.forEach((corner, i) => {
         const currentX = gsap.getProperty(corner, 'x');
