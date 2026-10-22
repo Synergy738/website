@@ -1324,3 +1324,6 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
   .pj .sec-head .numeral { margin-bottom: -1.6rem; }
   .pj .sec-head { top: 1.5rem; }
 }
+@media (max-width: 899px) {
+  .wrap:not(#projects) { padding-block: 50px; }
+}
