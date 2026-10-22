@@ -1249,10 +1249,15 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 #projects .pj-line > span { font-size: clamp(3.4rem, 13vw, 11rem); } /* on the span: the phone 15px body rule outranks the p */
 .pj-fill {
   color: transparent; -webkit-background-clip: text; background-clip: text;
-  background: linear-gradient(100deg, #3a8bff, #9fdcff 35%, #e9edf2 55%, #5fb4ff 80%, #2a6cff) 0 0 / var(--fill1) 100% no-repeat, #2c2f37;
+  /* grey covers the unfilled right side; the liquid chrome drifts underneath */
+  --f: var(--fill1);
+  background: linear-gradient(#2c2f37, #2c2f37) right / calc(100% - var(--f)) 100% no-repeat, url(/chrome-flow.webp) 0 0 / 38vw auto repeat;
   -webkit-background-clip: text; background-clip: text;
+  animation: chrome-flow 22s linear infinite alternate;
 }
-.pj-fill.two { background-size: var(--fill2) 100%, auto; }
+.pj-fill.two { --f: var(--fill2); }
+@keyframes chrome-flow { to { background-position: right, 38vw 22vw; } }
+@media (prefers-reduced-motion: reduce) { .pj-fill { animation: none; } }
 .pj-icon { display: inline-block; width: 0.72em; height: 0.72em; vertical-align: -0.04em; margin-inline: 0.02em; color: #2c2f37; transition: color 0.4s; }
 .pj-icon svg { width: 100%; height: 100%; display: block; }
 .pj-icon.lit { color: #7fd0ff; filter: drop-shadow(0 0 14px rgba(110, 190, 255, 0.7)); animation: info-in 0.5s ease both; }
