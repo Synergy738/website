@@ -160,7 +160,7 @@ const ScrollExpand = ({
     const onScroll = () => {
       target = readProgress();
       // touch scrolling is already smooth; easing on top of it reads as lag
-      if (propsRef.current.smoothing <= 0 || reduceMotion || coarse) {
+      if (propsRef.current.smoothing <= 0 || reduceMotion || coarse || document.documentElement.dataset.jump) {
         current = target;
         applyProgress(current);
         return;
