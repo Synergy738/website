@@ -1313,3 +1313,7 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
   translate: 10.5% 0;
   background: url("/about-bg.webp") center / 100% 100%;
 }
+/* phones: the blue Projects block runs edge to edge between the section dividers */
+@media (max-width: 899px) {
+  #projects.wrap { padding-block: 0; }
+}
