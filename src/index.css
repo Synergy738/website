@@ -1107,6 +1107,11 @@ footer {
   .rail { display: none; }
 }
 
+/* phones: the name spans wider than the buttons under it */
+@media (max-width: 599px) {
+  .hero h1 { font-size: 13vw; }
+}
+
 /* phone header + slide-in menu */
 .mbar, .mmenu, .mmenu-veil { display: none; }
 @media (max-width: 899px) {
