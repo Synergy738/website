@@ -1326,3 +1326,8 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
   .card:hover::after { opacity: 0; }
   .socials a:hover span { filter: none; opacity: 0.6; }
 }
+
+/* desktop: no paragraph text under 16px */
+@media (min-width: 900px) {
+  body p:not(.chrome-text), body .about-copy p { font-size: 16px; }
+}
