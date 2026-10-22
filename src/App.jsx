@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { me, skills, experience, projects, certs, orgs } from "./data";
 import DitherVeil from "./bits/DitherVeil";
 import ScrollExpand from "./bits/ScrollExpand";
@@ -8,7 +8,7 @@ import ReachForStars from "./bits/ReachForStars";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TargetCursor from "./bits/TargetCursor";
 import AutoScroll from "./bits/AutoScroll";
-import CardSwap from "./bits/CardSwap";
+import CircularGallery from "./bits/CircularGallery";
 
 // About's numbers come straight from the certificates, so they stay true as the list grows
 const CERT_ORGS = [...new Set(certs.map((c) => c.org))];
@@ -299,78 +299,104 @@ export default function App() {
   );
 }
 
-// The stack shows each project's screenshot; the details of whichever card is in front sit beside it.
+// Pinned: the line fills with colour (the bulb turns into a rocket at the end), the gallery slides up
+// over it, then each further screen of scroll steps one project; stop and it opens with its details.
 function Projects() {
-  const [front, setFront] = useState(0);
-  const show = useCallback((i) => setFront(i), []);
-  const p = projects[front];
-  const step = useRef(() => {});
-  const swipe = useRef(0);
-  const phone = matchMedia("(max-width: 899px)").matches;
-  if (phone) step.current = (d) => setFront((front + d + projects.length) % projects.length);
-  return (
-    <div className="projects">
-      <div className="project-info" key={front} aria-live="polite">
-        <p className="kind">{p.kind}</p>
-        <h3 className="chrome-text">{p.title}</h3>
-        <p className="blurb">{p.blurb}</p>
-        <ul className="stack">
-          {p.stack.map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
-        <a className="btn cursor-target" href={p.href} target="_blank" rel="noreferrer">
-          View project
-        </a>
-      </div>
-      <div className="swap-stage">
-        {/* phones: just the current screenshot, full width; the arrows step through */}
-        {phone ? (
-          <div
-            className="swap-one"
-            onPointerDown={(e) => (swipe.current = e.clientX)}
-            onPointerUp={(e) => {
-              const dx = e.clientX - swipe.current;
-              if (Math.abs(dx) > 40) step.current(dx < 0 ? 1 : -1), (swipe.current = null);
-            }}
-            // a swipe isn't a click on the screenshot link
-            onClickCapture={(e) => swipe.current === null && e.preventDefault()}
-          >
-            <Shot key={p.title} project={p} />
+  const root = useRef(null);
+  const api = useRef(null);
+  const [lit, setLit] = useState(false);
+  const items = useMemo(
+    () =>
+      projects.map((p) => ({
+        image: placeholder(p),
+        text: p.title,
+        description: p.blurb,
+        extra: (
+          <div className="pj-info">
+            <ul className="stack">{p.stack.map((s) => <li key={s}>{s}</li>)}</ul>
+            <a className="btn cursor-target" href={p.href} target="_blank" rel="noreferrer">View project</a>
           </div>
-        ) : (
-          <CardSwap onFront={show} apiRef={step}>
-            {projects.map((proj) => (
-              <Shot key={proj.title} project={proj} />
-            ))}
-          </CardSwap>
-        )}
-        <div className="deck-nav swap-nav">
-          <button className="cursor-target" onClick={() => step.current(-1)} aria-label="Previous project">&larr;</button>
-          <span>{String(front + 1).padStart(2, "0")} / {projects.length}</span>
-          <button className="cursor-target" onClick={() => step.current(1)} aria-label="Next project">&rarr;</button>
-        </div>
+        ),
+      })),
+    []
+  );
+  useEffect(() => {
+    const el = root.current;
+    const n = projects.length;
+    const U = 1.6 + n; // 1 fill, 0.6 slide, then one unit per project
+    let timer, opened = false, last = -1;
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: "top top",
+      end: () => `+=${U * innerHeight * 0.7}`,
+      pin: true,
+      onUpdate: ({ progress }) => {
+        const u = progress * U;
+        el.style.setProperty("--fill", `${Math.min(u, 1) * 100}%`);
+        el.style.setProperty("--up", `${(1 - Math.min(Math.max(u - 1, 0) / 0.6, 1)) * 100}%`);
+        setLit(u >= 1);
+        clearTimeout(timer);
+        if (opened) {
+          api.current?.close();
+          opened = false;
+        }
+        if (u < 1.6) return;
+        const i = Math.min(Math.floor(u - 1.6), n - 1);
+        if (i !== last) api.current?.focus((last = i));
+        timer = setTimeout(() => (api.current?.open(i), (opened = true)), 350);
+      },
+    });
+    return () => (clearTimeout(timer), st.kill());
+  }, []);
+  return (
+    <div className="pj" ref={root}>
+      <p className="pj-line" aria-label="From idea to launch">
+        <span className="pj-fill" aria-hidden="true">
+          From idea<br />t<span className={`pj-icon${lit ? " lit" : ""}`}>{lit ? ROCKET : BULB}</span> launch
+        </span>
+      </p>
+      <div className="pj-stage">
+        <CircularGallery items={items} apiRef={api} wheel={false} bend={2} borderRadius={0} shadow={0} textColor="#e9edf2" font="bold 26px Cinzel" />
       </div>
     </div>
   );
 }
 
-// Drop a screenshot at public/projects/<slug>.webp and the card uses it; until then it shows the title.
-function Shot({ project }) {
-  const [hasShot, setHasShot] = useState(true);
-  const slug = project.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-  return (
-    <a className="cursor-target" href={project.href} target="_blank" rel="noreferrer" aria-label={project.title}>
-      {hasShot ? (
-        <img src={`/projects/${slug}.webp`} alt="" onError={() => setHasShot(false)} />
-      ) : (
-        <span className="shot-ph">
-          <span className="kind">{project.kind}</span>
-          <span className="chrome-text">{project.title}</span>
-        </span>
-      )}
-    </a>
-  );
+const BULB = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
+    <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z" />
+  </svg>
+);
+const ROCKET = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2c3 2.5 4.5 6 4.5 10L15 16H9l-1.5-4C7.5 8 9 4.5 12 2zM9 16l-3 3 1-4M15 16l3 3-1-4M12 9.5v.01" />
+  </svg>
+);
+
+// ponytail: drawn title cards until the screenshots arrive; swap in /projects/<slug>.webp then
+function placeholder(p) {
+  const c = document.createElement("canvas");
+  c.width = 800;
+  c.height = 1000;
+  const g = c.getContext("2d");
+  const bg = g.createLinearGradient(0, 0, 800, 1000);
+  bg.addColorStop(0, "#14161d");
+  bg.addColorStop(1, "#05050a");
+  g.fillStyle = bg;
+  g.fillRect(0, 0, 800, 1000);
+  g.textAlign = "center";
+  g.fillStyle = "#70747d";
+  g.font = "28px Cinzel";
+  g.fillText(p.kind.toUpperCase(), 400, 440);
+  g.fillStyle = "#e9edf2";
+  g.font = "bold 56px Cinzel";
+  p.title.split(" ").reduce((lines, w) => {
+    const l = lines.at(-1);
+    if (l && (l + " " + w).length < 16) lines[lines.length - 1] = l + " " + w;
+    else lines.push(w);
+    return lines;
+  }, []).forEach((l, i) => g.fillText(l, 400, 530 + i * 70));
+  return c.toDataURL();
 }
 
 // cards fan out in depth around the active one; arrows, keys, swipe or click to move
