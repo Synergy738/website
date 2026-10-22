@@ -1030,6 +1030,8 @@ const CircularGallery = ({
       wake,
       open: index => openSlot(slotFor(index)),
       focus: index => setSlot(slotFor(index)),
+      // continuous position in card units, for scroll-driven use
+      seek: f => ((state.target = f * state.spacing), wake()),
       close
     };
     if (apiRef) apiRef.current = engineRef.current;

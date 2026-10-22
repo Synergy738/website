@@ -326,7 +326,7 @@ function Projects() {
     const el = root.current;
     const n = projects.length;
     const U = 1.6 + n; // 1 fill, 0.6 slide, then one unit per project
-    let timer, opened = false, last = -1;
+    let timer, opened = false;
     const st = ScrollTrigger.create({
       trigger: el,
       start: "top top",
@@ -347,8 +347,9 @@ function Projects() {
           opened = false;
         }
         if (u < 1.6) return;
-        const i = Math.min(Math.floor(u - 1.6), n - 1);
-        if (i !== last) api.current?.focus((last = i));
+        // glides with the scroll; snaps to the nearest card when it stops
+        const f = Math.min(u - 1.6, n - 1), i = Math.round(f);
+        api.current?.seek(f);
         timer = setTimeout(() => (api.current?.open(i), (opened = true)), 350);
       },
     });
