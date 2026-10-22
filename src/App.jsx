@@ -296,10 +296,14 @@ function CertCarousel() {
   const wrap = useRef(null);
   const st = useRef(null);
   useEffect(() => {
+    // the whole section pins: centred if it fits, top-aligned if its content still does;
+    // on phones it doesn't, so just the deck pins centred
+    const sec = wrap.current.closest("section");
+    const contentH = wrap.current.getBoundingClientRect().bottom - sec.getBoundingClientRect().top;
+    const fits = sec.offsetHeight <= innerHeight;
     st.current = ScrollTrigger.create({
-      // whole section pins: centred if it fits, else top-aligned
-      trigger: wrap.current.closest("section"),
-      start: () => (wrap.current.closest("section").offsetHeight > innerHeight ? "top top" : "center center"),
+      trigger: fits || contentH <= innerHeight ? sec : wrap.current,
+      start: fits || contentH > innerHeight ? "center center" : "top top",
       end: `+=${n * 140}`,
       pin: true,
       onUpdate: (t) => setI(Math.round(t.progress * (n - 1))),

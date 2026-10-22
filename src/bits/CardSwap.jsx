@@ -24,7 +24,8 @@ export default function CardSwap({
   const hold = useRef(false); // pointer over the stack: no auto swap under it
 
   useEffect(() => {
-    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // no auto swap on touch screens: each swap changes the page height, and iOS jumps when the pins re-measure
+    const still = matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches;
     const at = (i) => slot(i, cardDistance, verticalDistance, n);
     order.current.forEach((idx, i) =>
       gsap.set(els.current[idx], { ...at(i), xPercent: -50, yPercent: -50, skewY: skewAmount, force3D: true })
