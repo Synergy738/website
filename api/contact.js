@@ -1,8 +1,7 @@
 // Contact form → email, as a Vercel-style serverless function (POST /api/contact).
-// Needs RESEND_API_KEY. Until a domain is verified in Resend, mail can only come from
-// onboarding@resend.dev to the Resend account's own address; set CONTACT_FROM once it is.
-const TO = process.env.CONTACT_TO || "bludennis17@gmail.com";
-const FROM = process.env.CONTACT_FROM || "Portfolio <onboarding@resend.dev>";
+// Needs RESEND_API_KEY. Sends from the Resend-verified bludennis.co.za to the Zoho mailbox.
+const TO = process.env.CONTACT_TO || "contact@bludennis.co.za";
+const FROM = process.env.CONTACT_FROM || "Portfolio <portfolio@bludennis.co.za>";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
