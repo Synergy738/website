@@ -69,14 +69,14 @@ const ScrollExpand = ({
 
     const e = smoothstep(0, 1, p);
 
-    const w = c.startWidth + (100 - c.startWidth) * e;
-    const h = c.startHeight + (100 - c.startHeight) * e;
-    const ix = Math.max(0, (100 - w) / 2);
-    const iy = Math.max(0, (100 - h) / 2);
-    const r = c.startRadius + (c.endRadius - c.startRadius) * e;
-    frame.style.clipPath = `inset(${iy}% ${ix}% ${iy}% ${ix}% round ${r}px)`;
-
-    media.style.transform = `scale(${c.mediaZoom + (1 - c.mediaZoom) * e})`;
+    // scale the frame and counter-scale what's inside: transforms stay on the GPU, where an animated
+    // clip-path repaints the blurred background every frame and stutters on iPhones
+    const sx = (c.startWidth + (100 - c.startWidth) * e) / 100;
+    const sy = (c.startHeight + (100 - c.startHeight) * e) / 100;
+    frame.style.transform = `scale(${sx}, ${sy})`;
+    const z = c.mediaZoom + (1 - c.mediaZoom) * e;
+    media.style.transform = `scale(${z / sx}, ${z / sy})`;
+    if (scrimRef.current) scrimRef.current.style.transform = `scale(${1 / sx}, ${1 / sy})`;
 
     // scrub: the video's playhead follows scroll (encode with every frame a keyframe, ffmpeg -g 1)
     if (c.scrub && media.duration) media.currentTime = p * media.duration;
@@ -98,7 +98,7 @@ const ScrollExpand = ({
     if (overlayRef.current) {
       const inn = smoothstep(0.68, 1, p);
       overlayRef.current.style.opacity = `${inn}`;
-      overlayRef.current.style.transform = `translate3d(0, ${18 * (1 - inn)}px, 0)`;
+      overlayRef.current.style.transform = `scale(${1 / sx}, ${1 / sy}) translate3d(0, ${18 * (1 - inn)}px, 0)`;
     }
   }, []);
 

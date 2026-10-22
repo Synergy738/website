@@ -97,7 +97,7 @@ function MobileBar() {
   return (
     <>
       <header className={"mbar" + (hidden && !open ? " up" : "")}>
-        <a href="#home" className="mbar-name chrome-text" onClick={close}>Blũ Dennis</a>
+        <a href="#home" className="mbar-name" onClick={close} aria-label="Blũ Dennis, back to top"><img src="/logo.svg" alt="" width="38" height="38" /></a>
         <button className={"burger" + (open ? " x" : "")} aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}>
           <span /><span /><span />
         </button>

@@ -1123,7 +1123,7 @@ footer {
     transition: translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   .mbar.up { translate: 0 -100%; }
-  .mbar-name { font-family: var(--display); font-size: 1.05rem; letter-spacing: 0.08em; }
+  .mbar-name img { display: block; }
   .burger { width: 40px; height: 40px; display: grid; place-content: center; gap: 6px; background: none; border: 0; padding: 0; }
   .burger span { display: block; width: 24px; height: 1.5px; background: var(--silver); transition: translate 0.3s, rotate 0.3s, opacity 0.3s; }
   .burger.x span:nth-child(1) { translate: 0 7.5px; rotate: 45deg; }
