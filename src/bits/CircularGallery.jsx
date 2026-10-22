@@ -250,6 +250,7 @@ const CircularGallery = ({
   onActiveChange,
   dpr,
   apiRef,
+  side = false,
   wheel = true,
   className = '',
   style,
@@ -287,7 +288,8 @@ const CircularGallery = ({
     onItemClick,
     onActiveChange,
     dpr,
-    wheel
+    wheel,
+    side
   };
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
@@ -380,6 +382,7 @@ const CircularGallery = ({
       velocity: 0,
       open: 0,
       openTarget: 0,
+      side: 0,
       intro: settingsRef.current.intro && !reduce ? 0 : 1,
       waveTime: 0,
       ring: 0,
@@ -514,14 +517,15 @@ const CircularGallery = ({
         const order = Math.abs(slot * spacing - state.scroll) / spacing;
         const shown = ease(clamp(state.intro * 2.2 - order * 0.22, 0, 1));
         const hover = state.hover.get(slot) || 0;
-        const lift = 1 + hover * 0.04 * (1 - focus);
+        const lift = (1 + hover * 0.04 * (1 - focus)) * (1 - 0.3 * ease(state.side) * focus);
+        const sd = ease(state.side) * focus;
         const card = {
           slot,
           index,
           item,
           entry,
-          x: mix(x, 0, focus),
-          y: mix(arc.y, frame.y, focus) - (1 - shown) * h * 0.18,
+          x: mix(x, 0, focus) - sd * view.width * 0.2,
+          y: mix(mix(arc.y, frame.y, focus), 0, sd) - (1 - shown) * h * 0.18,
           angle: arc.angle * (1 - focus),
           w: mix(w, frame.width, focus) * lift,
           h: mix(h, frame.height, focus) * lift,
@@ -643,8 +647,15 @@ const CircularGallery = ({
         if (entry.el.style.opacity !== '0') entry.el.style.opacity = '0';
       });
       const top = view.height / 2 - (metrics.openY - metrics.openH / 2) + metrics.titleSpace + 4;
-      caption.style.transform = `translate(-50%, ${top}px)`;
-      caption.style.opacity = String(ease(clamp((state.open - 0.5) / 0.5, 0, 1)));
+      const sd = ease(state.side);
+      caption.toggleAttribute('data-side', sd > 0);
+      if (sd > 0) {
+        caption.style.transform = `translate(${view.width * (0.02 + 0.04 * sd)}px, ${view.height / 2}px) translateY(-50%)`;
+        caption.style.opacity = String(sd);
+      } else {
+        caption.style.transform = `translate(-50%, ${top}px)`;
+        caption.style.opacity = String(s.side && view.width >= 900 ? 0 : ease(clamp((state.open - 0.5) / 0.5, 0, 1)));
+      }
       caption.style.color = s.textColor;
       if (caption.dataset.font !== font) {
         caption.dataset.font = font;
@@ -713,6 +724,10 @@ const CircularGallery = ({
       const openFollow = reduce ? 1 : 1 - Math.exp(-dt / 0.14);
       state.open += (state.openTarget - state.open) * openFollow;
       if (Math.abs(state.openTarget - state.open) < 0.001) state.open = state.openTarget;
+      // side: once open, the card slides left and shrinks, the caption comes in on the right (wide screens)
+      const sideTarget = s.side && view.width >= 900 && state.openTarget === 1 && state.open > 0.97 ? 1 : 0;
+      state.side += (sideTarget - state.side) * (reduce ? 1 : 1 - Math.exp(-dt / 0.22));
+      if (Math.abs(sideTarget - state.side) < 0.001) state.side = sideTarget;
       state.ring += ((state.keyboard ? 1 : 0) - state.ring) * (1 - Math.exp(-dt / 0.1));
       if (Math.abs((state.keyboard ? 1 : 0) - state.ring) < 0.002) state.ring = state.keyboard ? 1 : 0;
       if (state.intro < 1) state.intro = Math.min(1, state.intro + dt / INTRO_SECONDS);
@@ -760,6 +775,7 @@ const CircularGallery = ({
         state.scroll !== state.target ||
         state.velocity !== 0 ||
         state.open !== state.openTarget ||
+        (state.side !== 0 && state.side !== 1) ||
         state.intro < 1 ||
         (state.ring !== 0 && state.ring !== 1) ||
         settling;
@@ -1013,7 +1029,7 @@ const CircularGallery = ({
     engineRef.current = {
       wake,
       open: index => openSlot(slotFor(index)),
-      focus: index => setSlot(slotFor(index), false),
+      focus: index => setSlot(slotFor(index)),
       close
     };
     if (apiRef) apiRef.current = engineRef.current;

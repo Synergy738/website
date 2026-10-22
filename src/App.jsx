@@ -313,6 +313,8 @@ function Projects() {
         description: p.blurb,
         extra: (
           <div className="pj-info">
+            <p className="kind">{p.kind}</p>
+            <h3 className="chrome-text">{p.title}</h3>
             <ul className="stack">{p.stack.map((s) => <li key={s}>{s}</li>)}</ul>
             <a className="btn cursor-target" href={p.href} target="_blank" rel="noreferrer">View project</a>
           </div>
@@ -364,7 +366,7 @@ function Projects() {
         </span>
       </p>
       <div className="pj-stage">
-        <CircularGallery items={items} apiRef={api} wheel={false} bend={2} textColor="#e9edf2" font="bold 26px Cinzel" />
+        <CircularGallery items={items} apiRef={api} wheel={false} side bend={2} textColor="#e9edf2" font="bold 26px Cinzel" />
       </div>
     </div>
   );

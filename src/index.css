@@ -1245,7 +1245,7 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 
 /* ── Projects: pinned line fills with light, then the gallery slides up over it ── */
 .pj { position: relative; height: 100svh; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; --fill1: 0%; --fill2: 0%; --up: 100%; }
-#projects .pj-line { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; text-align: center; font-family: var(--display); font-weight: 700; line-height: 1.05; opacity: var(--fade, 1); }
+#projects .pj-line { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; text-align: center; font-family: Outfit, "Segoe UI", sans-serif; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; text-transform: none; opacity: var(--fade, 1); translate: 0 calc((var(--fade, 1) - 1) * 70svh); }
 #projects .pj-line > span { font-size: clamp(3.4rem, 13vw, 11rem); } /* on the span: the phone 15px body rule outranks the p */
 .pj-fill {
   color: transparent; -webkit-background-clip: text; background-clip: text;
@@ -1260,3 +1260,14 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 .pj-info { display: grid; margin-top: 1.2rem; pointer-events: auto; justify-items: center; gap: 0.8rem; text-align: center; animation: info-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 .pj-info .stack { justify-content: center; }
 @keyframes info-in { from { opacity: 0; translate: 0 18px; filter: blur(6px); } }
+/* title + kind live in the side caption only; below the card the gallery's own label names it */
+.pj-info .kind, .pj-info h3 { display: none; }
+.pj .circular-gallery-caption[data-side] { width: min(40vw, 34rem); text-align: left; }
+.pj .circular-gallery-caption[data-side] .pj-info { justify-items: start; }
+.pj .circular-gallery-caption[data-side] :is(.kind, h3) { display: block; margin: 0; }
+.pj .circular-gallery-caption[data-side] h3 { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1; }
+.pj .circular-gallery-caption[data-side] .stack { justify-content: flex-start; }
+.pj .circular-gallery-caption[data-side] { display: flex; flex-direction: column; align-items: flex-start; }
+.pj .circular-gallery-caption[data-side] .pj-info { display: contents; }
+.pj .circular-gallery-caption[data-side] :is(.kind, h3) { order: -1; text-align: left; }
+.pj .circular-gallery-caption[data-side] .circular-gallery-caption-text { text-align: left; margin: 1rem 0; }
