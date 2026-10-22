@@ -595,6 +595,10 @@ h1 {
   inset: 0;
   opacity: 0.85;
 }
+/* phones: the copy sits on the bust, so dim it right down */
+@media (max-width: 899px) {
+  .hero-veil { opacity: 0.35; }
+}
 
 /* Wide screens: copy on the left, the bust on the right. The image's own black
    margins are scaled off-screen so the head fills the full height without cropping. */
