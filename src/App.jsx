@@ -300,7 +300,7 @@ export default function App() {
 }
 
 // Pinned: the line fills with colour (the bulb turns into a rocket at the end), the gallery slides up
-// over it, then each further screen of scroll steps one project; stop and it opens with its details.
+// over it, then each further screen of scroll steps one project; click one to open its details.
 function Projects() {
   const root = useRef(null);
   const api = useRef(null);
@@ -325,7 +325,6 @@ function Projects() {
   useEffect(() => {
     const el = root.current;
     const n = projects.length;
-    let timer, opened = false;
     const STEP = 150; // px per project: one mouse-wheel notch in Chrome on Windows (ponytail: varies by device/zoom)
     const st = ScrollTrigger.create({
       trigger: el,
@@ -337,21 +336,14 @@ function Projects() {
         const px = self.scroll() - self.start, intro = innerHeight * 0.7;
         const u = px < intro ? px / intro : 1 + (px - intro) / STEP;
         el.style.setProperty("--s", Math.min(u, 1));
-        clearTimeout(timer);
-        if (opened) {
-          api.current?.close();
-          opened = false;
-        }
-        // glides with the scroll; snaps to the nearest card and opens it when scrolling stops
-        if (u < 1) return;
-        const f = Math.min(u - 1, n - 1), i = Math.round(f);
-        api.current?.seek(f);
-        timer = setTimeout(() => (api.current?.open(i), (opened = true)), 350);
+        // glides with the scroll; a card opens only when clicked, and scrolling closes it
+        api.current?.close();
+        if (u >= 1) api.current?.seek(Math.min(u - 1, n - 1));
       },
     });
     // entering: the heading rides in at the section top and sticks once it reaches the centre
     const enter = ScrollTrigger.create({ trigger: el, start: "top bottom", end: "top top", onUpdate: ({ progress }) => el.style.setProperty("--e", progress) });
-    return () => (clearTimeout(timer), st.kill(), enter.kill());
+    return () => (st.kill(), enter.kill());
   }, []);
   return (
     <div className="pj" ref={root}>
