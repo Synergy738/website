@@ -1220,6 +1220,12 @@ body:has(.stars-stage:is(.play, .up, .title)) .target-cursor-wrapper { opacity: 
   transition: opacity 0.4s, translate 0.4s, background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
 }
 .to-top:hover { background: var(--silver); color: var(--void); border-color: var(--silver); box-shadow: 0 0 40px rgba(200, 215, 235, 0.35); }
+.to-top svg { width: 26px; height: 26px; fill: none; stroke-linecap: square; stroke-linejoin: miter; overflow: visible; }
+.to-top .tt-edge { stroke: var(--silver); stroke-width: 5; }
+.to-top .tt-hole { stroke: var(--void); stroke-width: 3.4; }
+.to-top .tt-fill { stroke: var(--silver); stroke-width: 3.4; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--page, 0)); filter: drop-shadow(0 0 4px rgba(200, 215, 235, 0.6)); }
+.to-top:hover .tt-edge, .to-top:hover .tt-fill { stroke: var(--void); }
+.to-top:hover .tt-hole { stroke: var(--silver); }
 body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; pointer-events: none; }
 
 @media (max-width: 899px) {

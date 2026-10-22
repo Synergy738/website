@@ -143,6 +143,9 @@ function MobileBar() {
 // phones get static sections: no pinned scroll effects
 const PHONE = matchMedia("(max-width: 899px)").matches;
 
+// back-to-top fill: share of the page scrolled
+addEventListener("scroll", () => document.documentElement.style.setProperty("--page", scrollY / (document.documentElement.scrollHeight - innerHeight || 1)), { passive: true });
+
 export default function App() {
   useScrollTriggerRefresh();
   const navRef = useActiveSection();
@@ -163,7 +166,14 @@ export default function App() {
       <div className="grain" aria-hidden="true" />
       <div className="vignette" aria-hidden="true" />
 
-      <a href="#home" className="to-top cursor-target" aria-label="Back to top">&uarr;</a>
+      <a href="#home" className="to-top cursor-target" aria-label="Back to top">
+        {/* chevron outline; the inner stroke fills from the left tip, over the apex, to the right tip as the page scrolls */}
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path className="tt-edge" d="M5 16 L12 8 L19 16" pathLength="1" />
+          <path className="tt-hole" d="M5 16 L12 8 L19 16" pathLength="1" />
+          <path className="tt-fill" d="M5 16 L12 8 L19 16" pathLength="1" />
+        </svg>
+      </a>
       <nav className="rail" ref={navRef} aria-label="Sections">
         {SECTIONS.map(([id, numeral]) => (
           <a key={id} href={"#" + id} className="cursor-target" onClick={toAboutEnd}>
