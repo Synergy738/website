@@ -356,7 +356,7 @@ function Projects() {
       <LightRays className="pj-rays" raysColor="#bfe3ff" followMouse={false} cursorShadow={false} clickPulse={false} />
       <Heading numeral="V" title="Projects" />
       <div className="pj-stage">
-        <CircularGallery items={items} apiRef={api} wheel={false} side bend={2} textColor="#e9edf2" font="bold 26px Cinzel" />
+        <CircularGallery items={items} apiRef={api} wheel={false} side bend={2} itemSize={0.7} textColor="#e9edf2" font="bold 26px Cinzel" />
       </div>
     </div>
   );

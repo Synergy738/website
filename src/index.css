@@ -1245,7 +1245,7 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 /* ── Projects: pinned line fills with light, then the gallery slides up over it ── */
 .pj { --s: 0; position: relative; height: 100svh; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; }
 .pj-rays { position: absolute; inset: 0; opacity: var(--s); }
-.pj .sec-head { --cards: 23%; position: absolute; top: min(max(0px, calc(50% - 2.7rem - (1 - var(--e, 1)) * 100%)), calc((1 - var(--s)) * 100% + var(--cards) - 150px - 5.4rem)); left: 0; right: 0; z-index: 2; justify-content: center; margin: 0; pointer-events: none; }
+.pj .sec-head { --cards: 32%; position: absolute; top: min(max(0px, calc(50% - 2.7rem - (1 - var(--e, 1)) * 100%)), calc((1 - var(--s)) * 100% + var(--cards) - 150px - 5.4rem)); left: 0; right: 0; z-index: 2; justify-content: center; margin: 0; pointer-events: none; }
 .pj .sec-head .rule { display: none; }
 .pj .sec-head h2 { color: color-mix(in srgb, #07090d calc(var(--s) * 100%), var(--silver)); -webkit-text-stroke: 1px rgba(191, 227, 255, calc(var(--s) * 0.35)); text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9); }
 .pj-stage { position: absolute; inset: 0; translate: 0 calc((1 - var(--s)) * 100%); }
