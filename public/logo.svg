@@ -1,15 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-75 -45 520 520">
   <defs>
     <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#f4f6f9"/>
       <stop offset="0.5" stop-color="#a7afba"/>
       <stop offset="1" stop-color="#e3e8ee"/>
     </linearGradient>
+    <clipPath id="a"><rect x="-50" y="-60" width="470" height="380"/></clipPath>
+    <clipPath id="v"><rect x="-50" y="100" width="470" height="380"/></clipPath>
   </defs>
-  <rect width="100" height="100" rx="18" fill="#06060b"/>
-  <!-- one shape: the triangle is the D, the two strokes from its stem make it a B -->
-  <g fill="none" stroke="url(#c)" stroke-width="6" stroke-linejoin="miter" stroke-miterlimit="10">
-    <path d="M21 14 79 34 21 86Z"/>
-    <path d="M49 24 21 50 55 55"/>
+  <rect x="-75" y="-45" width="520" height="520" rx="90" fill="#06060b"/>
+  <!-- a V woven through an A, a small v inside: each stroke gets a dark edge so the crossings read as over/under -->
+  <g fill="none" stroke-width="28" stroke-miterlimit="10">
+    <path clip-path="url(#v)" d="M-23 60 184 418 392 60" stroke="url(#c)"/>
+    <g clip-path="url(#a)">
+      <path d="M-35 390 184 0 404 390" stroke="#06060b" stroke-width="44"/>
+      <path d="M-35 390 184 0 404 390" stroke="url(#c)"/>
+    </g>
+    <path d="M128 112 184 243 240 112" stroke="#06060b" stroke-width="44"/>
+    <path d="M128 112 184 243 240 112" stroke="url(#c)"/>
   </g>
 </svg>
