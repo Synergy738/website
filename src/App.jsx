@@ -308,7 +308,7 @@ function Projects() {
   const items = useMemo(
     () =>
       projects.map((p) => ({
-        image: placeholder(p),
+        image: SHOTS[`/public/projects/${slugOf(p)}.webp`] || placeholder(p),
         text: p.title,
         description: p.blurb,
         extra: (
@@ -373,7 +373,9 @@ const ROCKET = (
   </svg>
 );
 
-// ponytail: drawn title cards until the screenshots arrive; swap in /projects/<slug>.webp then
+// a screenshot at public/projects/<slug>.webp is picked up automatically; until then a drawn title card
+const SHOTS = import.meta.glob("/public/projects/*.webp", { query: "?url", import: "default", eager: true });
+const slugOf = (p) => p.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 function placeholder(p) {
   const c = document.createElement("canvas");
   c.width = 800;
