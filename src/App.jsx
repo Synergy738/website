@@ -215,7 +215,7 @@ export default function App() {
             scrollHint="Scroll"
             mediaZoom={1.2}
             startRadius={2}
-            overlayScrim={0.7}
+            overlayScrim={0.5}
             scrollDistance={ABOUT_SCROLL}
             holdDistance={0.2}
             useWindowScroll
