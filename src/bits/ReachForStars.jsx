@@ -38,7 +38,11 @@ export default function ReachForStars() {
   useEffect(() => {
     const next = { up: ["title", 3000], title: ["form", 1600] }[phase];
     if (!next) return;
-    const id = setTimeout(() => setPhase(next[0]), next[1]);
+    const id = setTimeout(() => {
+      setPhase(next[0]);
+      // phones: the form is taller than the screen, so land on its top rather than wherever the scene left off
+      if (next[0] === "form" && matchMedia("(max-width: 899px)").matches) requestAnimationFrame(() => stage.current.scrollIntoView({ behavior: "smooth" }));
+    }, next[1]);
     return () => clearTimeout(id);
   }, [phase]);
 
