@@ -141,7 +141,7 @@ function MobileBar() {
 export default function App() {
   useScrollTriggerRefresh();
   const navRef = useActiveSection();
-  const finePointer = typeof window !== "undefined" && window.matchMedia("(pointer: fine) and (min-width: 600px)").matches;
+  const finePointer = typeof window !== "undefined" && window.matchMedia("(pointer: fine) and (hover: hover) and (min-width: 900px)").matches;
   const [heroIn, setHeroIn] = useState(false);
 
   return (
