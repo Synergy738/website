@@ -58,7 +58,10 @@ function useActiveSection() {
 }
 
 // Cursor-tracked chrome sheen on a card, via CSS vars.
+// touch screens: off, a tap shouldn't tilt the card and it saves low-end phones the work
+const touch = matchMedia("(hover: none)").matches;
 function sheen(e) {
+  if (touch) return;
   const r = e.currentTarget.getBoundingClientRect();
   const x = (e.clientX - r.left) / r.width;
   const y = (e.clientY - r.top) / r.height;
@@ -279,6 +282,7 @@ function Projects() {
   const show = useCallback((i) => setFront(i), []);
   const p = projects[front];
   const step = useRef(() => {});
+  const swipe = useRef(0);
   const phone = matchMedia("(max-width: 899px)").matches;
   if (phone) step.current = (d) => setFront((front + d + projects.length) % projects.length);
   return (
@@ -299,7 +303,16 @@ function Projects() {
       <div className="swap-stage">
         {/* phones: just the current screenshot, full width; the arrows step through */}
         {phone ? (
-          <div className="swap-one">
+          <div
+            className="swap-one"
+            onPointerDown={(e) => (swipe.current = e.clientX)}
+            onPointerUp={(e) => {
+              const dx = e.clientX - swipe.current;
+              if (Math.abs(dx) > 40) step.current(dx < 0 ? 1 : -1), (swipe.current = null);
+            }}
+            // a swipe isn't a click on the screenshot link
+            onClickCapture={(e) => swipe.current === null && e.preventDefault()}
+          >
             <Shot key={p.title} project={p} />
           </div>
         ) : (

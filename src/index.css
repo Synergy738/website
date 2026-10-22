@@ -605,14 +605,21 @@ h1 {
   );
 }
 
-.card:hover,
-.cert:hover {
+.card:hover {
   border-color: var(--edge-hot);
   box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
 }
 
-.card:hover::after,
-.cert:hover::after { opacity: 1; }
+.card:hover::after { opacity: 1; }
+
+/* touch screens: no hover glow on certificates */
+@media (hover: hover) {
+  .cert:hover {
+    border-color: var(--edge-hot);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+  .cert:hover::after, .cert:hover::before { opacity: 1; }
+}
 
 
 .kind {
@@ -1173,7 +1180,6 @@ footer {
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
   filter: drop-shadow(0 0 6px rgba(220, 230, 245, calc(var(--near, 0) * 0.8)));
 }
-.cert:hover::before { opacity: 1; }
 
 /* depth carousel */
 .deck { position: relative; height: 340px; perspective: 1200px; touch-action: pan-y; outline: none; }
@@ -1307,4 +1313,15 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 @media (max-width: 899px) {
   #projects, #projects .project-info { text-align: center; }
   #projects .stack, #projects .swap-nav { justify-content: center; }
+}
+
+/* swipes go to the carousel, vertical drags still scroll the page */
+.deck, .swap-one { touch-action: pan-y; }
+
+/* touch screens: no hover animation or glow; buttons still change colour on tap, instantly */
+@media (hover: none) {
+  .btn, .deck-nav button, .to-top, .socials a span { transition: none; }
+  .btn:hover, .deck-nav button:hover, .to-top:hover, .card:hover { box-shadow: none; }
+  .card:hover::after { opacity: 0; }
+  .socials a:hover span { filter: none; opacity: 0.6; }
 }
