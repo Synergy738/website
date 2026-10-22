@@ -140,6 +140,9 @@ function MobileBar() {
   );
 }
 
+// phones get static sections: no pinned scroll effects
+const PHONE = matchMedia("(max-width: 899px)").matches;
+
 export default function App() {
   useScrollTriggerRefresh();
   const navRef = useActiveSection();
@@ -208,6 +211,35 @@ export default function App() {
         </section>
 
         <section id="about" className="expand">
+          {PHONE ? (
+            <div className="about-plain">
+            <p className="kicker">II &middot; About</p>
+            <h2 className="chrome-text">Taught by the best</h2>
+            <div className="about-copy">
+              {me.manifesto.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+            <dl className="facts">
+              <div>
+                <dt>Certifications</dt>
+                <dd className="chrome-text">{certs.length}</dd>
+              </div>
+              <div>
+                <dt>Institutions</dt>
+                <dd className="chrome-text">{CERT_ORGS.length}</dd>
+              </div>
+              <div>
+                <dt>Average mark</dt>
+                <dd className="chrome-text">{AVG_MARK}%</dd>
+              </div>
+              <div>
+                <dt>Studying since</dt>
+                <dd className="chrome-text">{Math.min(...certs.map((c) => +c.date.slice(-4)))}</dd>
+              </div>
+            </dl>
+            </div>
+          ) : (
           <ScrollExpand
             src="/about-bg.webp"
             alt=""
@@ -247,6 +279,7 @@ export default function App() {
               </div>
             </dl>
           </ScrollExpand>
+          )}
         </section>
 
         <section id="skills" className="wrap">
@@ -324,6 +357,7 @@ function Projects() {
   useEffect(() => {
     const el = root.current;
     const n = projects.length;
+    if (PHONE) return el.style.setProperty("--s", 1), el.style.setProperty("--e", 1), undefined;
     const STEP = 150; // px per project: one mouse-wheel notch in Chrome on Windows (ponytail: varies by device/zoom)
     const st = ScrollTrigger.create({
       trigger: el,

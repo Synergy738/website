@@ -1286,3 +1286,9 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
   .grain { display: none; }
   * { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 }
+/* phones: Who I am is a plain block over the image, faded top and bottom */
+.about-plain {
+  position: relative;
+  padding: 5rem 1.25rem;
+  background: linear-gradient(var(--void), rgba(5, 5, 10, 0.75) 18%, rgba(5, 5, 10, 0.75) 82%, var(--void)), url("/about-bg.webp") center / cover;
+}
