@@ -1290,5 +1290,5 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 .about-plain {
   position: relative;
   padding: 5rem 1.25rem;
-  background: linear-gradient(var(--void), rgba(5, 5, 10, 0.75) 18%, rgba(5, 5, 10, 0.75) 82%, var(--void)), url("/about-bg.webp") center / cover;
+  background: linear-gradient(var(--void), rgba(5, 5, 10, 0.35) 15%, rgba(5, 5, 10, 0.35) 85%, var(--void)), url("/about-bg.webp") left center / cover;
 }
