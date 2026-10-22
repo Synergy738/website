@@ -316,7 +316,7 @@ function Projects() {
             <p className="kind">{p.kind}</p>
             <h3 className="chrome-text">{p.title}</h3>
             <ul className="stack">{p.stack.map((s) => <li key={s}>{s}</li>)}</ul>
-            <a className="btn cursor-target" href={p.href} target="_blank" rel="noreferrer">View project</a>
+            <a className="btn" href={p.href} target="_blank" rel="noreferrer">View project</a>
           </div>
         ),
       })),

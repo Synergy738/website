@@ -842,7 +842,7 @@ const CircularGallery = ({
     };
 
     const onPointerDown = event => {
-      if (event.button !== 0 || event.target.closest('[data-gallery-close]')) return;
+      if (event.button !== 0 || event.target.closest('[data-gallery-close], a')) return;
       const p = point(event);
       state.drag = {
         id: event.pointerId,
