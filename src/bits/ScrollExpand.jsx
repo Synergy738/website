@@ -98,7 +98,7 @@ const ScrollExpand = ({
     if (overlayRef.current) {
       const inn = smoothstep(0.68, 1, p);
       overlayRef.current.style.opacity = `${inn}`;
-      overlayRef.current.style.transform = `scale(${1 / sx}, ${1 / sy}) translate3d(0, ${18 * (1 - inn)}px, 0)`;
+      overlayRef.current.style.transform = `translate3d(0, ${18 * (1 - inn)}px, 0)`;
     }
   }, []);
 
@@ -109,6 +109,7 @@ const ScrollExpand = ({
     if (!root || !track || !stage) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
 
     let raf = 0;
     let current = 0;
@@ -158,7 +159,8 @@ const ScrollExpand = ({
 
     const onScroll = () => {
       target = readProgress();
-      if (propsRef.current.smoothing <= 0 || reduceMotion) {
+      // touch scrolling is already smooth; easing on top of it reads as lag
+      if (propsRef.current.smoothing <= 0 || reduceMotion || coarse) {
         current = target;
         applyProgress(current);
         return;
@@ -226,12 +228,13 @@ const ScrollExpand = ({
           <div ref={frameRef} className="scroll-expand__frame">
             {media}
             <div ref={scrimRef} className="scroll-expand__scrim" />
-            {children ? (
-              <div ref={overlayRef} className="scroll-expand__overlay">
-                {children}
-              </div>
-            ) : null}
           </div>
+          {/* outside the scaled frame, so its text never re-rasterises while the frame grows */}
+          {children ? (
+            <div ref={overlayRef} className="scroll-expand__overlay">
+              {children}
+            </div>
+          ) : null}
           {title ? (
             <div ref={titleRef} className="scroll-expand__title">
               {title}
