@@ -347,7 +347,9 @@ function Projects() {
         timer = setTimeout(() => (api.current?.open(i), (opened = true)), 350);
       },
     });
-    return () => (clearTimeout(timer), st.kill());
+    // entering: the heading rides in at the section top and sticks once it reaches the centre
+    const enter = ScrollTrigger.create({ trigger: el, start: "top bottom", end: "top top", onUpdate: ({ progress }) => el.style.setProperty("--e", progress) });
+    return () => (clearTimeout(timer), st.kill(), enter.kill());
   }, []);
   return (
     <div className="pj" ref={root}>
