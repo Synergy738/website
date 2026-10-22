@@ -33,6 +33,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  background: #000;
   transform: scale(0.42, 0.58);
   will-change: transform;
 }

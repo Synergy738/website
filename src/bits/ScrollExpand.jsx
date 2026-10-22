@@ -28,6 +28,7 @@ const ScrollExpand = ({
   holdDistance = 0.35,
   smoothing = 0.1,
   overlayScrim = 0.45,
+  startDim = 0, // media starts this much darker and brightens to normal as it expands
   useWindowScroll = false,
   enabled = true,
   children,
@@ -56,6 +57,7 @@ const ScrollExpand = ({
     holdDistance,
     smoothing,
     overlayScrim,
+    startDim,
     useWindowScroll,
     enabled,
     scrub
@@ -82,6 +84,8 @@ const ScrollExpand = ({
     if (c.scrub && media.duration) media.currentTime = p * media.duration;
 
     if (scrimRef.current) scrimRef.current.style.opacity = `${c.overlayScrim * e}`;
+    // opacity over the frame's black, not a filter: stays on the compositor
+    if (c.startDim) media.style.opacity = `${1 - c.startDim * (1 - e)}`;
 
     if (titleRef.current) {
       const out = smoothstep(0.4, 0.88, p);
