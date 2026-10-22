@@ -495,6 +495,12 @@ const CircularGallery = ({
         const aspect = textureFor(item.image).aspect || w / h;
         const titleSpace = item.text && s.showTitles ? captionSize() * 2.4 : 0;
         const captionSpace = titleSpace + (item.description ? 52 : 0);
+        if (view.width < 900) {
+          // phones: image capped and pinned near the top (under the close button), text fills the rest
+          const width = Math.min(view.width - margin * 2, view.height * 0.36 * aspect);
+          const height = width / aspect;
+          return { width, height, y: view.height / 2 - margin - 48 - height / 2, titleSpace };
+        }
         const width = Math.min(view.width - margin * 2, (view.height - margin * 2 - captionSpace) * aspect);
         return { width, height: width / aspect, y: captionSpace / 2, titleSpace };
       };
