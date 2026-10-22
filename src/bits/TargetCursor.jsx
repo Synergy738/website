@@ -258,6 +258,7 @@ const TargetCursor = ({
     window.addEventListener('mouseup', mouseUpHandler);
 
     const enterHandler = e => {
+      if (anchored) return; // no target snapping while middle-click autoscroll holds the cursor
       const directTarget = e.target;
       const allTargets = [];
       let current = directTarget;
