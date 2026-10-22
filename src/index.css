@@ -1254,7 +1254,7 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 .pj-rays { position: absolute; inset: 0; opacity: var(--s); background: radial-gradient(90% 80% at 50% 0, rgba(58, 160, 255, 0.16), rgba(58, 160, 255, 0.05)); }
 .pj .sec-head { --cards: 37%; position: absolute; top: min(max(0px, calc(50% - 2.7rem - (1 - var(--e, 1)) * 100%)), calc((1 - var(--s)) * 100% + var(--cards) - 150px - 5.4rem)); left: 0; right: 0; z-index: 2; justify-content: center; margin: 0; pointer-events: none; }
 .pj .sec-head .rule { display: none; }
-.pj .sec-head h2 { color: color-mix(in srgb, #07090d calc(var(--s) * 100%), var(--silver)); text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9); }
+.pj .sec-head h2, .pj .sec-head .numeral { color: color-mix(in srgb, #07090d calc(var(--s) * 100%), var(--silver)); text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9); }
 .pj-stage { position: absolute; inset: 10svh 0 0; translate: 0 calc((1 - var(--s)) * 100%); }
 .pj-info { display: grid; margin-top: 1.2rem; pointer-events: auto; justify-items: center; gap: 0.8rem; text-align: center; animation: info-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 .pj-info .stack { justify-content: center; }
