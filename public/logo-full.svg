@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320">
+  <style>@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;display=swap");</style>
+  <defs>
+    <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4f6f9"/>
+      <stop offset="0.5" stop-color="#a7afba"/>
+      <stop offset="1" stop-color="#e3e8ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" fill="#06060b"/>
+  <!-- same mark as logo.svg, scaled up -->
+  <g transform="translate(128 20) scale(1.5)" fill="none" stroke="url(#c)" stroke-width="6" stroke-miterlimit="10">
+    <path d="M24 18V82L46 66 24 50 46 34 24 18Z"/>
+    <path d="M46 18V82L78 50Z"/>
+  </g>
+  <g fill="url(#c)" font-family="Cinzel, serif" text-anchor="middle">
+    <text x="200" y="232" font-size="40" font-weight="700" letter-spacing="4">BLŨ DENNIS</text>
+    <text x="200" y="268" font-size="13" font-weight="500" letter-spacing="7" fill="#9aa3ae">FULL-STACK DEVELOPER</text>
+  </g>
+</svg>
