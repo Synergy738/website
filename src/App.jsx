@@ -154,6 +154,13 @@ export default function App() {
   const navRef = useActiveSection();
   const finePointer = typeof window !== "undefined" && window.matchMedia("(pointer: fine) and (hover: hover) and (min-width: 900px)").matches;
   const [heroIn, setHeroIn] = useState(false);
+  // Safari has no view timelines: drive the experience rail's fill from ScrollTrigger instead
+  useEffect(() => {
+    if (CSS.supports("animation-timeline: view()")) return;
+    const el = document.querySelector(".timeline");
+    const st = ScrollTrigger.create({ trigger: el, start: "top center", end: "bottom center", onUpdate: ({ progress }) => el.style.setProperty("--fill", progress) });
+    return () => st.kill();
+  }, []);
 
   return (
     <>
@@ -186,6 +193,7 @@ export default function App() {
               softness={0.6}
               linger={1}
               onReveal={setHeroIn}
+              interactive={finePointer}
             />
           </div>
 

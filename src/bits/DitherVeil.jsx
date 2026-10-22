@@ -387,6 +387,7 @@ const DitherVeil = ({
   reverse = false,
   wander = false,
   clickBurst = true,
+  interactive = true,
   onReveal,
   className = '',
   style
@@ -772,7 +773,7 @@ const DitherVeil = ({
       if (bursts.length > MAX_BURSTS) bursts.shift();
     };
     // Listen on the enclosing section so text layered on top doesn't block the effect.
-    const target = container.closest('section') || container;
+    const target = interactive ? container.closest('section') || container : document.createElement('div');
     target.addEventListener('pointermove', onMove, { passive: true });
     target.addEventListener('pointerenter', onMove, { passive: true });
     target.addEventListener('pointerdown', onDown, { passive: true });
@@ -808,7 +809,7 @@ const DitherVeil = ({
       gl.getExtension('WEBGL_lose_context')?.loseContext();
       if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
     };
-  }, [src, onReveal]);
+  }, [src, onReveal, interactive]);
 
   return <div ref={containerRef} className={`dither-veil ${className}`.trim()} style={style} />;
 };
