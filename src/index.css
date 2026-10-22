@@ -361,7 +361,7 @@ h1 {
 
 .expand .scroll-expand__scrim {
   background:
-    radial-gradient(55% 45% at 50% 50%, rgba(5, 5, 10, 0.92), rgba(5, 5, 10, 0.55) 70%, transparent),
+    radial-gradient(42% 62% at 50% 58%, rgba(5, 5, 10, 0.95), rgba(5, 5, 10, 0.8) 60%, transparent),
     linear-gradient(180deg, rgba(5, 5, 10, 0.6), transparent 30%, transparent 70%, var(--void));
 }
 
