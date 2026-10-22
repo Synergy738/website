@@ -1268,3 +1268,4 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 .pj .circular-gallery-caption[data-side] .circular-gallery-caption-text { text-align: left; margin: 1rem 0; }
 /* phones: one big card, neighbours peeking as before */
 @media (max-width: 899px) { .slide { --w: min(300px, 78vw); transform: translateX(calc(var(--o) * 72%)) translateZ(calc(var(--a) * -180px)) rotateY(calc(var(--o) * -16deg)); } }
+#certifications .sec-head { margin-bottom: 1.2rem; }
