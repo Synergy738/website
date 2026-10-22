@@ -140,7 +140,7 @@ const TargetCursor = ({
       const cursorY = gsap.getProperty(cursorRef.current, 'y');
 
       // re-measure each frame so targets that grow on hover (the rail labels) stay wrapped
-      if (activeTarget) {
+      if (activeTarget?.isConnected) { // a re-rendered target measures 0,0; keep the last corners
         const r = activeTarget.getBoundingClientRect();
         const { borderWidth: b, cornerSize: s } = constants;
         const { x: ox, y: oy } = getOffset();

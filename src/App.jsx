@@ -316,7 +316,7 @@ function Projects() {
             <p className="kind">{p.kind}</p>
             <h3 className="chrome-text">{p.title}</h3>
             <ul className="stack">{p.stack.map((s) => <li key={s}>{s}</li>)}</ul>
-            <a className="btn" href={p.href} target="_blank" rel="noreferrer">View project</a>
+            <a className="btn cursor-target" href={p.href} target="_blank" rel="noreferrer">View project</a>
           </div>
         ),
       })),
@@ -326,14 +326,16 @@ function Projects() {
     const el = root.current;
     const n = projects.length;
     let timer, opened = false;
+    const STEP = 150; // px per project: one mouse-wheel notch in Chrome on Windows (ponytail: varies by device/zoom)
     const st = ScrollTrigger.create({
       trigger: el,
       start: "top top",
-      end: () => `+=${(n + 1) * innerHeight * 0.7}`,
+      end: () => `+=${innerHeight * 0.7 + n * STEP}`,
       pin: true,
-      onUpdate: ({ progress }) => {
-        // first unit: heading rises from the centre, rays fade in, cards slide up; then one unit per project
-        const u = progress * (n + 1);
+      onUpdate: (self) => {
+        // intro: rays fade in, cards slide up; then one wheel notch per project
+        const px = self.scroll() - self.start, intro = innerHeight * 0.7;
+        const u = px < intro ? px / intro : 1 + (px - intro) / STEP;
         el.style.setProperty("--s", Math.min(u, 1));
         clearTimeout(timer);
         if (opened) {
@@ -356,7 +358,7 @@ function Projects() {
       <LightRays className="pj-rays" raysColor="#bfe3ff" followMouse={false} cursorShadow={false} clickPulse={false} />
       <Heading numeral="V" title="Projects" />
       <div className="pj-stage">
-        <CircularGallery items={items} apiRef={api} wheel={false} side bend={2} itemSize={0.7} textColor="#e9edf2" font="bold 26px Cinzel" />
+        <CircularGallery items={items} apiRef={api} wheel={false} side bend={2} itemSize={0.7} borderRadius={0} shadow={0} textColor="#e9edf2" font="bold 26px Cinzel" />
       </div>
     </div>
   );
