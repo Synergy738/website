@@ -1290,5 +1290,20 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 .about-plain {
   position: relative;
   padding: 5rem 1.25rem;
-  background: linear-gradient(var(--void), rgba(5, 5, 10, 0.35) 15%, rgba(5, 5, 10, 0.35) 85%, var(--void)), url("/about-bg.webp") left center / cover;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(var(--void), rgba(5, 5, 10, 0.35) 15%, rgba(5, 5, 10, 0.35) 85%, var(--void));
+}
+/* the image's right side, scaled by section height: the floor line (~70% down) is pushed below
+   the section and the right neon pillar (x 1360-1420 of 1500) sits just past the right edge */
+.about-plain::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  height: calc(100% / 0.68);
+  aspect-ratio: 1500 / 841;
+  translate: 10.5% 0;
+  background: url("/about-bg.webp") center / 100% 100%;
 }
