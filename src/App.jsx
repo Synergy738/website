@@ -7,6 +7,7 @@ import OrbitImages from "./bits/OrbitImages";
 import ReachForStars from "./bits/ReachForStars";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TargetCursor from "./bits/TargetCursor";
+import AutoScroll from "./bits/AutoScroll";
 import CardSwap from "./bits/CardSwap";
 
 // About's numbers come straight from the certificates, so they stay true as the list grows
@@ -156,6 +157,7 @@ export default function App() {
   return (
     <>
       {finePointer && <TargetCursor spinDuration={2.4} hideDefaultCursor parallaxOn cursorColor="#e9edf2" />}
+      {finePointer && <AutoScroll />}
       <div className="grain" aria-hidden="true" />
       <div className="vignette" aria-hidden="true" />
 
