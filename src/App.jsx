@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TargetCursor from "./bits/TargetCursor";
 import AutoScroll from "./bits/AutoScroll";
 import CircularGallery from "./bits/CircularGallery";
+import LightRays from "./bits/LightRays";
 
 // About's numbers come straight from the certificates, so they stay true as the list grows
 const CERT_ORGS = [...new Set(certs.map((c) => c.org))];
@@ -278,7 +279,6 @@ export default function App() {
         </section>
 
         <section id="projects" className="wrap">
-          <Heading numeral="V" title="Projects" />
           <Projects />
         </section>
 
@@ -304,7 +304,6 @@ export default function App() {
 function Projects() {
   const root = useRef(null);
   const api = useRef(null);
-  const [lit, setLit] = useState(false);
   const items = useMemo(
     () =>
       projects.map((p) => ({
@@ -325,32 +324,24 @@ function Projects() {
   useEffect(() => {
     const el = root.current;
     const n = projects.length;
-    const U = 1.6 + n; // 1 fill, 0.6 slide, then one unit per project
     let timer, opened = false;
     const st = ScrollTrigger.create({
       trigger: el,
       start: "top top",
-      end: () => `+=${U * innerHeight * 0.7}`,
+      end: () => `+=${(n + 1) * innerHeight * 0.7}`,
       pin: true,
       onUpdate: ({ progress }) => {
-        const u = progress * U;
-        // first line fills, then the second
-        el.style.setProperty("--fill1", `${Math.min(u * 2, 1) * 100}%`);
-        el.style.setProperty("--fill2", `${Math.min(Math.max(u * 2 - 1, 0), 1) * 100}%`);
-        const up = Math.min(Math.max(u - 1, 0) / 0.6, 1);
-        el.style.setProperty("--up", `${(1 - up) * 70}%`);
-        el.style.setProperty("--fade", 1 - up);
-        // the line creeps up while it fills, then rides up with the cards like normal flow
-        el.style.setProperty("--drift", `${(1 - 2 * Math.min(u, 1)) * 8}svh`);
-        setLit(u >= 1);
+        // first unit: heading rises from the centre, rays fade in, cards slide up; then one unit per project
+        const u = progress * (n + 1);
+        el.style.setProperty("--s", Math.min(u, 1));
         clearTimeout(timer);
         if (opened) {
           api.current?.close();
           opened = false;
         }
-        if (u < 1.6) return;
-        // glides with the scroll; snaps to the nearest card when it stops
-        const f = Math.min(u - 1.6, n - 1), i = Math.round(f);
+        // glides with the scroll; snaps to the nearest card and opens it when scrolling stops
+        if (u < 1) return;
+        const f = Math.min(u - 1, n - 1), i = Math.round(f);
         api.current?.seek(f);
         timer = setTimeout(() => (api.current?.open(i), (opened = true)), 350);
       },
@@ -359,32 +350,14 @@ function Projects() {
   }, []);
   return (
     <div className="pj" ref={root}>
-      <p className="pj-line" aria-label="From idea to launch">
-        <span aria-hidden="true">
-          <span className="pj-fill">From idea</span>
-          <br />
-          <span className="pj-fill two">
-            t<span className={`pj-icon${lit ? " lit" : ""}`}>{lit ? ROCKET : BULB}</span> launch
-          </span>
-        </span>
-      </p>
+      <LightRays className="pj-rays" raysColor="#bfe3ff" followMouse={false} cursorShadow={false} clickPulse={false} />
+      <Heading numeral="V" title="Projects" />
       <div className="pj-stage">
         <CircularGallery items={items} apiRef={api} wheel={false} side bend={2} textColor="#e9edf2" font="bold 26px Cinzel" />
       </div>
     </div>
   );
 }
-
-const BULB = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-    <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z" />
-  </svg>
-);
-const ROCKET = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2c3 2.5 4.5 6 4.5 10L15 16H9l-1.5-4C7.5 8 9 4.5 12 2zM9 16l-3 3 1-4M15 16l3 3-1-4M12 9.5v.01" />
-  </svg>
-);
 
 // a screenshot at public/projects/<slug>.webp is picked up automatically; until then a drawn title card
 const SHOTS = import.meta.glob("/public/projects/*.webp", { query: "?url", import: "default", eager: true });
