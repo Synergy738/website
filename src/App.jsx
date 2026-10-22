@@ -338,8 +338,10 @@ function Projects() {
         el.style.setProperty("--fill1", `${Math.min(u * 2, 1) * 100}%`);
         el.style.setProperty("--fill2", `${Math.min(Math.max(u * 2 - 1, 0), 1) * 100}%`);
         const up = Math.min(Math.max(u - 1, 0) / 0.6, 1);
-        el.style.setProperty("--up", `${(1 - up) * 100}%`);
-        el.style.setProperty("--fade", 1 - up); // no backdrop behind the cards, so the line fades as they rise
+        el.style.setProperty("--up", `${(1 - up) * 70}%`);
+        el.style.setProperty("--fade", 1 - up);
+        // the line creeps up while it fills, then rides up with the cards like normal flow
+        el.style.setProperty("--drift", `${(1 - 2 * Math.min(u, 1)) * 8}svh`);
         setLit(u >= 1);
         clearTimeout(timer);
         if (opened) {
