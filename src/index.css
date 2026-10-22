@@ -1237,7 +1237,7 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 calc(100% 
 
 /* touch screens: no hover animation or glow; buttons still change colour on tap, instantly */
 @media (hover: none) {
-  .btn, .deck-nav button, .to-top, .socials a span { transition: none; }
+  .btn, .deck-nav button, .socials a span { transition: none; }
   .btn:hover, .deck-nav button:hover, .card:hover { box-shadow: none; }
   .card:hover::after { opacity: 0; }
   .socials a:hover span { filter: none; opacity: 0.6; }
