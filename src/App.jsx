@@ -258,7 +258,7 @@ export default function App() {
 
         <section id="certifications" className="wrap">
           <Heading numeral="VI" title="Certifications" />
-          <p className="note" data-reveal>
+          <p className="note cert-note" data-reveal>
             {certs.length} certifications, {Math.min(...MARKS)}%&ndash;{Math.max(...MARKS)}%, from Harvard, MIT,
             Georgia Tech, NYU, Oracle, Microsoft and AWS.
           </p>
@@ -346,6 +346,8 @@ function CertCarousel() {
   const wrap = useRef(null);
   const st = useRef(null);
   useEffect(() => {
+    // phones: no pinning, the deck is just swiped
+    if (matchMedia("(max-width: 899px)").matches) return;
     // the whole section pins: centred if it fits, top-aligned if its content still does;
     // on phones it doesn't, so just the deck pins centred
     const sec = wrap.current.closest("section");
@@ -363,6 +365,7 @@ function CertCarousel() {
   const seek = (k) => {
     const t = st.current;
     k = Math.max(0, Math.min(n - 1, k));
+    if (!t) return setI(k);
     window.scrollTo({ top: t.start + (k / (n - 1)) * (t.end - t.start), behavior: "smooth" });
   };
   const go = (d) => seek(i + d);
