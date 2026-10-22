@@ -1317,3 +1317,7 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 @media (max-width: 899px) {
   #projects.wrap { padding-block: 0; }
 }
+@media (max-width: 899px) {
+  .pj::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(var(--void), transparent 12%, transparent 88%, var(--void)); }
+  .pj .sec-head .numeral { margin-bottom: -1.6rem; }
+}
