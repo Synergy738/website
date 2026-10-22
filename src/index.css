@@ -92,7 +92,7 @@ a {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-dim);
-  opacity: 0.45;
+  opacity: 0.75;
   transition: opacity 0.3s, color 0.3s, letter-spacing 0.3s;
 }
 
