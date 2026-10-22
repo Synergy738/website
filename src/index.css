@@ -1336,29 +1336,3 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 @media (pointer: fine) and (hover: hover) and (min-width: 900px) {
   *, *::before, *::after { cursor: none !important; }
 }
-
-/* middle-click autoscroll, in place of the browser's own (whose cursor CSS can't hide) */
-.autoscroll {
-  position: fixed;
-  z-index: 10000;
-  width: 34px;
-  height: 34px;
-  margin: -17px 0 0 -17px;
-  border: 1px solid var(--silver);
-  border-radius: 50%;
-  pointer-events: none;
-  box-shadow: 0 0 18px rgba(200, 215, 235, 0.25);
-}
-.autoscroll::before, .autoscroll::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  width: 7px;
-  height: 7px;
-  margin-left: -4.5px;
-  border: solid var(--silver);
-  border-width: 1.5px 0 0 1.5px;
-}
-.autoscroll::before { top: 6px; transform: rotate(45deg); }
-.autoscroll::after { bottom: 6px; transform: rotate(-135deg); }
-.autoscroll i { position: absolute; inset: 14px; border-radius: 50%; background: var(--silver); }

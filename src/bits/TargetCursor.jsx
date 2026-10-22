@@ -177,8 +177,53 @@ const TargetCursor = ({
 
     tickerFnRef.current = tickerFn;
 
-    const moveHandler = e => moveCursor(e.clientX, e.clientY);
+    // middle-click autoscroll (AutoScroll.jsx): the cursor stays where the click was and turns 45deg,
+    // so its corners become four chevrons round the dot; the chevron facing the scroll direction
+    // slides out along its diagonal to sit under the mouse
+    let anchored = false;
+    let last = [0, 0];
+    const moveHandler = e => {
+      last = [e.clientX, e.clientY];
+      if (!anchored) moveCursor(e.clientX, e.clientY);
+    };
     window.addEventListener('mousemove', moveHandler);
+    const autoStart = () => {
+      anchored = true;
+      spinTl.current?.pause();
+      gsap.killTweensOf(cursor, 'rotation');
+      const r = gsap.getProperty(cursor, 'rotation');
+      gsap.to(cursor, { rotation: Math.round((r - 45) / 90) * 90 + 45, duration: 0.35, ease: 'power3.out' });
+    };
+    // corners' resting top-left offsets, and their outward diagonals
+    const REST = [[-18, -18], [6, -18], [6, 6], [-18, 6]];
+    const DIAG = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+    const autoMove = ({ detail: d }) => {
+      if (!anchored || !cornersRef.current) return;
+      const rad = (gsap.getProperty(cursor, 'rotation') * Math.PI) / 180;
+      // the corner whose diagonal, once rotated, points most nearly straight down (or up)
+      const down = DIAG.map(([x, y]) => (x * Math.sin(rad) + y * Math.cos(rad)) * Math.sign(d));
+      const pick = down.indexOf(Math.max(...down));
+      // resting corners sit 17px out from the dot; the picked one goes as far as the mouse
+      const out = Math.max(0, Math.abs(d) - 17) / Math.SQRT2;
+      cornersRef.current.forEach((c, i) =>
+        gsap.to(c, {
+          x: REST[i][0] + (i === pick ? DIAG[i][0] * out : 0),
+          y: REST[i][1] + (i === pick ? DIAG[i][1] * out : 0),
+          duration: 0.15,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        })
+      );
+    };
+    const autoStop = () => {
+      anchored = false;
+      cornersRef.current?.forEach((c, i) => gsap.to(c, { x: REST[i][0], y: REST[i][1], duration: 0.3, ease: 'power3.out', overwrite: 'auto' }));
+      moveCursor(...last);
+      createSpinTimeline();
+    };
+    window.addEventListener('autoscroll:start', autoStart);
+    window.addEventListener('autoscroll:stop', autoStop);
+    window.addEventListener('autoscroll:move', autoMove);
 
     const scrollHandler = () => {
       if (!activeTarget || !cursorRef.current) return;
@@ -375,6 +420,9 @@ const TargetCursor = ({
       }
 
       window.removeEventListener('mousemove', moveHandler);
+      window.removeEventListener('autoscroll:start', autoStart);
+      window.removeEventListener('autoscroll:stop', autoStop);
+      window.removeEventListener('autoscroll:move', autoMove);
       window.removeEventListener('mouseover', enterHandler);
       window.removeEventListener('scroll', scrollHandler);
       window.removeEventListener('resize', resizeHandler);

@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-// Middle-click autoscroll drawn in the site's style. The browser's own shows an OS cursor no CSS can hide.
-// Click to start, move away from the dot to scroll, any click / key / wheel stops it.
+// Middle-click autoscroll in the site's style. The browser's own shows an OS cursor no CSS can hide.
+// Click to start, move away from the click point to scroll, any click / key / wheel stops it.
 // Hold-and-drag works too: letting go after moving stops it, like Chrome.
+// TargetCursor draws it: anchored at the click point, one chevron stretched to the mouse (autoscroll:* events).
 export default function AutoScroll() {
-  const [at, setAt] = useState(null);
-
   useEffect(() => {
     let raf = 0, y0 = 0, y = 0, moved = false, on = false;
     const stop = () => {
       on = false;
       cancelAnimationFrame(raf);
-      setAt(null);
+      dispatchEvent(new Event("autoscroll:stop"));
     };
     const tick = () => {
       const d = y - y0;
-      // 12px dead zone round the dot, then speed grows with distance
+      // 12px dead zone round the click point, then speed grows with distance
       if (Math.abs(d) > 12) scrollBy({ top: (d - Math.sign(d) * 12) / 8, behavior: "instant" });
       raf = requestAnimationFrame(tick);
     };
@@ -27,11 +26,12 @@ export default function AutoScroll() {
       on = true;
       moved = false;
       y0 = y = e.clientY;
-      setAt([e.clientX, e.clientY]);
+      dispatchEvent(new Event("autoscroll:start"));
       raf = requestAnimationFrame(tick);
     };
     const move = (e) => {
       y = e.clientY;
+      if (on) dispatchEvent(new CustomEvent("autoscroll:move", { detail: y - y0 }));
       if (Math.abs(y - y0) > 12) moved = true;
     };
     const up = (e) => on && e.button === 1 && moved && stop();
@@ -43,7 +43,7 @@ export default function AutoScroll() {
     addEventListener("wheel", end, { passive: true });
     addEventListener("blur", end);
     return () => {
-      stop();
+      if (on) stop();
       removeEventListener("mousedown", down);
       removeEventListener("mousemove", move);
       removeEventListener("mouseup", up);
@@ -53,5 +53,5 @@ export default function AutoScroll() {
     };
   }, []);
 
-  return at && <div className="autoscroll" style={{ left: at[0], top: at[1] }} aria-hidden="true"><i /></div>;
+  return null;
 }
