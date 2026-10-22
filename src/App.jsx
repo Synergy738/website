@@ -63,7 +63,14 @@ function toAboutEnd(e) {
   if (!e.currentTarget.hash.endsWith("about")) return;
   e.preventDefault();
   const top = document.getElementById("about").getBoundingClientRect().top + scrollY;
-  scrollTo({ top: top + innerHeight * ABOUT_SCROLL, behavior: "smooth" });
+  // hand-rolled: native smooth scroll has no duration setting; this takes 0.5s, eased in-out
+  const from = scrollY, to = top + innerHeight * ABOUT_SCROLL, t0 = performance.now();
+  const step = (now) => {
+    const t = Math.min(1, (now - t0) / 500);
+    scrollTo({ top: from + (to - from) * (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2), behavior: "instant" });
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 
 // Cursor-tracked chrome sheen on a card, via CSS vars.
