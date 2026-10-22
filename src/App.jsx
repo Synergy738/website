@@ -134,15 +134,6 @@ function MobileBar() {
             </a>
           ))}
         </nav>
-        <ul className="socials">
-          {me.links.map((l) => (
-            <li key={l.label}>
-              <a href={l.href} target="_blank" rel="noreferrer" aria-label={l.label} title={l.label}>
-                <span style={{ "--icon": `url(${l.icon})` }} />
-              </a>
-            </li>
-          ))}
-        </ul>
         <a className="btn btn-ghost" href="/Blu_Dennis_CV.pdf" download onClick={close}>Download CV</a>
       </aside>
     </>
