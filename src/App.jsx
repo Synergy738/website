@@ -332,8 +332,12 @@ function Projects() {
       pin: true,
       onUpdate: ({ progress }) => {
         const u = progress * U;
-        el.style.setProperty("--fill", `${Math.min(u, 1) * 100}%`);
-        el.style.setProperty("--up", `${(1 - Math.min(Math.max(u - 1, 0) / 0.6, 1)) * 100}%`);
+        // first line fills, then the second
+        el.style.setProperty("--fill1", `${Math.min(u * 2, 1) * 100}%`);
+        el.style.setProperty("--fill2", `${Math.min(Math.max(u * 2 - 1, 0), 1) * 100}%`);
+        const up = Math.min(Math.max(u - 1, 0) / 0.6, 1);
+        el.style.setProperty("--up", `${(1 - up) * 100}%`);
+        el.style.setProperty("--fade", 1 - up); // no backdrop behind the cards, so the line fades as they rise
         setLit(u >= 1);
         clearTimeout(timer);
         if (opened) {
@@ -351,12 +355,16 @@ function Projects() {
   return (
     <div className="pj" ref={root}>
       <p className="pj-line" aria-label="From idea to launch">
-        <span className="pj-fill" aria-hidden="true">
-          From idea<br />t<span className={`pj-icon${lit ? " lit" : ""}`}>{lit ? ROCKET : BULB}</span> launch
+        <span aria-hidden="true">
+          <span className="pj-fill">From idea</span>
+          <br />
+          <span className="pj-fill two">
+            t<span className={`pj-icon${lit ? " lit" : ""}`}>{lit ? ROCKET : BULB}</span> launch
+          </span>
         </span>
       </p>
       <div className="pj-stage">
-        <CircularGallery items={items} apiRef={api} wheel={false} bend={2} borderRadius={0} shadow={0} textColor="#e9edf2" font="bold 26px Cinzel" />
+        <CircularGallery items={items} apiRef={api} wheel={false} bend={2} textColor="#e9edf2" font="bold 26px Cinzel" />
       </div>
     </div>
   );
