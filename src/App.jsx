@@ -181,7 +181,7 @@ export default function App() {
               pattern="floyd"
               pixelSize={2}
               inkColor="#06060b"
-              paperColor="#3aa0ff"
+              paperColor="#cfd6df"
               revealRadius={200}
               softness={0.6}
               linger={1}
