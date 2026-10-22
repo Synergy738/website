@@ -1107,6 +1107,44 @@ footer {
   .rail { display: none; }
 }
 
+/* phone header + slide-in menu */
+.mbar, .mmenu, .mmenu-veil { display: none; }
+@media (max-width: 899px) {
+  .mbar {
+    display: flex; align-items: center; justify-content: space-between;
+    position: fixed; inset: 0 0 auto; z-index: 60; height: 56px; padding: 0 16px;
+    background: rgba(6, 6, 11, 0.72); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(233, 237, 242, 0.08);
+    transition: translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .mbar.up { translate: 0 -100%; }
+  .mbar-name { font-family: var(--display); font-size: 1.05rem; letter-spacing: 0.08em; }
+  .burger { width: 40px; height: 40px; display: grid; place-content: center; gap: 6px; background: none; border: 0; padding: 0; }
+  .burger span { display: block; width: 24px; height: 1.5px; background: var(--silver); transition: translate 0.3s, rotate 0.3s, opacity 0.3s; }
+  .burger.x span:nth-child(1) { translate: 0 7.5px; rotate: 45deg; }
+  .burger.x span:nth-child(2) { opacity: 0; }
+  .burger.x span:nth-child(3) { translate: 0 -7.5px; rotate: -45deg; }
+  .mmenu-veil {
+    display: block; position: fixed; inset: 0; z-index: 58; opacity: 0; pointer-events: none;
+    background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: opacity 0.35s;
+  }
+  .mmenu-veil.open { opacity: 1; pointer-events: auto; }
+  .mmenu {
+    display: flex; flex-direction: column; gap: 2rem;
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 59; width: min(80vw, 320px);
+    padding: 88px 28px 28px; overflow-y: auto;
+    background: #08080d; border-left: 1px solid rgba(233, 237, 242, 0.1);
+    translate: 100% 0; transition: translate 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .mmenu.open { translate: 0 0; }
+  .mmenu nav { display: flex; flex-direction: column; gap: 1.2rem; }
+  .mmenu nav a { font-family: var(--mono); font-size: 0.9rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim); }
+  .mmenu nav .numeral { font-family: var(--display); letter-spacing: 0; color: var(--silver); display: inline-block; width: 2.4em; }
+  .mmenu .socials { justify-content: flex-start; margin: 0; }
+  .mmenu .btn { align-self: flex-start; }
+}
+
 /* orgs without a published logo get their name in Cinzel instead */
 .crest-name { font-family: "Cinzel", serif; font-size: 1.1rem; letter-spacing: 0.08em; color: #c9ced6; }
 

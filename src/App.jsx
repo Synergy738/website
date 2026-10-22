@@ -77,6 +77,55 @@ function resetSheen(e) {
   s.setProperty("--ry", "0deg");
 }
 
+// phones: a top bar that hides on scroll down, and a burger that slides in the menu
+function MobileBar() {
+  const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    let last = scrollY;
+    const onScroll = () => {
+      setHidden(scrollY > last && scrollY > 60);
+      last = scrollY;
+    };
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("keydown", onKey);
+    return () => (removeEventListener("scroll", onScroll), removeEventListener("keydown", onKey));
+  }, []);
+  const close = () => setOpen(false);
+
+  return (
+    <>
+      <header className={"mbar" + (hidden && !open ? " up" : "")}>
+        <a href="#home" className="mbar-name chrome-text" onClick={close}>Blũ Dennis</a>
+        <button className={"burger" + (open ? " x" : "")} aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}>
+          <span /><span /><span />
+        </button>
+      </header>
+      <div className={"mmenu-veil" + (open ? " open" : "")} onClick={close} aria-hidden="true" />
+      <aside className={"mmenu" + (open ? " open" : "")} inert={!open}>
+        <nav aria-label="Sections">
+          {SECTIONS.map(([id, numeral]) => (
+            <a key={id} href={"#" + id} onClick={close}>
+              <span className="numeral">{numeral}</span> {id}
+            </a>
+          ))}
+        </nav>
+        <ul className="socials">
+          {me.links.map((l) => (
+            <li key={l.label}>
+              <a href={l.href} target="_blank" rel="noreferrer" aria-label={l.label} title={l.label}>
+                <span style={{ "--icon": `url(${l.icon})` }} />
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a className="btn btn-ghost" href="/Blu_Dennis_CV.pdf" download onClick={close}>Download CV</a>
+      </aside>
+    </>
+  );
+}
+
 export default function App() {
   useScrollTriggerRefresh();
   const navRef = useActiveSection();
@@ -98,6 +147,7 @@ export default function App() {
           </a>
         ))}
       </nav>
+      <MobileBar />
 
       <main>
         <section id="home" className="hero">
