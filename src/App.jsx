@@ -279,6 +279,8 @@ function Projects() {
   const show = useCallback((i) => setFront(i), []);
   const p = projects[front];
   const step = useRef(() => {});
+  const phone = matchMedia("(max-width: 899px)").matches;
+  if (phone) step.current = (d) => setFront((front + d + projects.length) % projects.length);
   return (
     <div className="projects">
       <div className="project-info" key={front} aria-live="polite">
@@ -295,11 +297,18 @@ function Projects() {
         </a>
       </div>
       <div className="swap-stage">
-        <CardSwap onFront={show} apiRef={step}>
-          {projects.map((proj) => (
-            <Shot key={proj.title} project={proj} />
-          ))}
-        </CardSwap>
+        {/* phones: just the current screenshot, full width; the arrows step through */}
+        {phone ? (
+          <div className="swap-one">
+            <Shot key={p.title} project={p} />
+          </div>
+        ) : (
+          <CardSwap onFront={show} apiRef={step}>
+            {projects.map((proj) => (
+              <Shot key={proj.title} project={proj} />
+            ))}
+          </CardSwap>
+        )}
         <div className="deck-nav swap-nav">
           <button className="cursor-target" onClick={() => step.current(-1)} aria-label="Previous project">&larr;</button>
           <span>{String(front + 1).padStart(2, "0")} / {projects.length}</span>
