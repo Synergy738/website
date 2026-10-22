@@ -294,9 +294,13 @@ export default function App() {
               <li className="job" key={job.company}>
                 <span className="tl-node" aria-hidden="true" />
                 <p className="when" data-reveal>{job.when}</p>
-                <ScrollFloat scrollStart="top bottom-=8%" scrollEnd="top center" stagger={0.015}>
-                  {job.role}
-                </ScrollFloat>
+                {PHONE ? (
+                  <h3 className="scroll-float"><span className="scroll-float-text">{job.role}</span></h3>
+                ) : (
+                  <ScrollFloat scrollStart="top bottom-=8%" scrollEnd="top center" stagger={0.015}>
+                    {job.role}
+                  </ScrollFloat>
+                )}
                 <p className="at" data-reveal>{job.company}</p>
                 <ul>
                   {job.bullets.map((b, j) => (
