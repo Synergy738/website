@@ -21,7 +21,11 @@ export default function ReachForStars() {
         const v = video.current;
         // React never writes the muted attribute, so autoplay can be refused; start it by hand
         v.muted = true;
-        v.play().then(() => setPhase("play"), () => setPhase("form"));
+        // iOS Low Power Mode refuses autoplay: wait for the first tap, which is allowed to start it
+        const go = () => v.play().then(() => setPhase("play"));
+        go().catch(() =>
+          addEventListener("pointerup", () => go().catch(() => setPhase("form")), { once: true })
+        );
       },
       // fires once the section's top is in the upper quarter of the screen, so the clip is seen from its start
       { rootMargin: "0px 0px -75% 0px" }

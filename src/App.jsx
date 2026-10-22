@@ -186,7 +186,7 @@ export default function App() {
 
         <section id="about" className="expand">
           <ScrollExpand
-            src="/about-bg.svg"
+            src="/about-bg.webp"
             alt=""
             title="Who I am"
             scrollHint="Scroll"
