@@ -306,7 +306,8 @@ function Projects() {
   const api = useRef(null);
   const items = useMemo(
     () =>
-      projects.map((p) => ({
+      // websites with a screenshot first; terminal (CS50) ones and placeholders after
+      projects.toSorted((a, b) => web(b) - web(a)).map((p) => ({
         image: SHOTS[`/public/projects/${slugOf(p)}.webp`] || placeholder(p),
         text: p.title,
         description: p.blurb,
@@ -361,6 +362,7 @@ function Projects() {
 
 // a screenshot at public/projects/<slug>.webp is picked up automatically; until then a drawn title card
 const SHOTS = import.meta.glob("/public/projects/*.webp", { query: "?url", import: "default", eager: true });
+const web = (p) => !/CS50/.test(p.kind) && !!SHOTS[`/public/projects/${slugOf(p)}.webp`];
 const slugOf = (p) => p.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 function placeholder(p) {
   const c = document.createElement("canvas");
