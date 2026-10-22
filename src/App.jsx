@@ -346,7 +346,8 @@ function Projects() {
   }, []);
   return (
     <div className="pj" ref={root}>
-      <LightRays className="pj-rays" raysSpeed={matchMedia("(max-width: 899px)").matches ? 0 : 1} raysColor="#bfe3ff" followMouse={false} cursorShadow={false} clickPulse={false} />
+      {/* phones: just the CSS glow, no WebGL */}
+      {matchMedia("(max-width: 899px)").matches ? <div className="pj-rays" /> : <LightRays className="pj-rays" raysColor="#bfe3ff" followMouse={false} cursorShadow={false} clickPulse={false} />}
       <Heading numeral="V" title="Projects" />
       <div className="pj-stage">
         <CircularGallery items={items} apiRef={api} wheel={false} side bend={2} itemSize={0.7} borderRadius={0} shadow={0} textColor="#e9edf2" font="bold 26px Cinzel" />
