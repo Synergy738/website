@@ -57,6 +57,15 @@ function useActiveSection() {
   return ref;
 }
 
+// About is an expand animation: its link scrolls to where the expand ends, so the whole thing plays on the way
+const ABOUT_SCROLL = 0.7;
+function toAboutEnd(e) {
+  if (!e.currentTarget.hash.endsWith("about")) return;
+  e.preventDefault();
+  const top = document.getElementById("about").getBoundingClientRect().top + scrollY;
+  scrollTo({ top: top + innerHeight * ABOUT_SCROLL, behavior: "smooth" });
+}
+
 // Cursor-tracked chrome sheen on a card, via CSS vars.
 // touch screens: off, a tap shouldn't tilt the card and it saves low-end phones the work
 const touch = matchMedia("(hover: none)").matches;
@@ -109,7 +118,7 @@ function MobileBar() {
       <aside className={"mmenu" + (open ? " open" : "")} inert={!open}>
         <nav aria-label="Sections">
           {SECTIONS.map(([id, numeral]) => (
-            <a key={id} href={"#" + id} onClick={close}>
+            <a key={id} href={"#" + id} onClick={(e) => (close(), toAboutEnd(e))}>
               <span className="numeral">{numeral}</span> {id}
             </a>
           ))}
@@ -144,7 +153,7 @@ export default function App() {
       <a href="#home" className="to-top cursor-target" aria-label="Back to top">&uarr;</a>
       <nav className="rail" ref={navRef} aria-label="Sections">
         {SECTIONS.map(([id, numeral]) => (
-          <a key={id} href={"#" + id} className="cursor-target">
+          <a key={id} href={"#" + id} className="cursor-target" onClick={toAboutEnd}>
             <span className="numeral">{numeral}</span>
             <span className="rail-label">{id}</span>
           </a>
@@ -196,6 +205,8 @@ export default function App() {
             mediaZoom={1.2}
             startRadius={2}
             overlayScrim={0.7}
+            scrollDistance={ABOUT_SCROLL}
+            holdDistance={0.2}
             useWindowScroll
           >
             <p className="kicker">II &middot; About</p>
