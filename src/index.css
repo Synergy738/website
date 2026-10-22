@@ -1327,6 +1327,3 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 12px; poin
 @media (max-width: 899px) {
   .wrap:not(#projects) { padding-block: 50px; }
 }
-@media (max-width: 899px) {
-  .pj-rays { inset: 60px 0 0; }
-}
