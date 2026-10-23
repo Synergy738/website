@@ -1330,3 +1330,7 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 calc(100% 
   .wrap:not(#projects) { padding-block: 50px; }
 }
 .cert-preview { display: block; width: 100%; max-height: 50vh; object-fit: contain; margin-block: 0.8rem 1.2rem; border: 1px solid var(--edge); }
+.cert-creds { display: grid; gap: 0.5rem; margin: 1.2rem 0; padding-top: 1rem; border-top: 1px solid var(--edge); }
+.cert-creds div { display: flex; justify-content: space-between; gap: 1rem; }
+.cert-creds dt { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.6; }
+.cert-creds dd { margin: 0; text-align: right; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }

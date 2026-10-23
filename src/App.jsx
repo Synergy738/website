@@ -517,14 +517,25 @@ function CertCarousel() {
         {c.img && <img className="cert-preview" src={c.img} alt={`${c.name} certificate`} loading="lazy" />}
         <h3>{c.name}</h3>
         <p>{c.about || "Details coming soon."}</p>
+        <dl className="cert-creds">
+          <div><dt>Issuer</dt><dd>{c.org}</dd></div>
+          <div><dt>Issued</dt><dd>{c.date}</dd></div>
+          {c.mark && <div><dt>Grade</dt><dd>{c.mark}</dd></div>}
+          {credId(c.url) && <div><dt>Credential ID</dt><dd>{credId(c.url)}</dd></div>}
+          {c.url && <div><dt>Verify at</dt><dd>{new URL(c.url).hostname.replace(/^www\./, "")}</dd></div>}
+        </dl>
         <div className="cert-modal-actions">
-          {c.url && <a className="btn cursor-target" href={c.url} target="_blank" rel="noreferrer">View certificate</a>}
+          {c.url && <a className="btn cursor-target" href={c.url} target="_blank" rel="noreferrer">Verify in new tab &#8599;</a>}
           <button className="btn cursor-target" onClick={() => dlg.current.close()}>Close</button>
         </div>
       </dialog>
     </div>
   );
 }
+
+// the longest id-looking segment of the certificate link; LinkedIn's media ids aren't credentials
+const credId = (url) =>
+  url && !url.includes("linkedin.com") && new URL(url).pathname.split("/").filter((p) => p.length >= 10 && /\d/.test(p)).sort((a, b) => b.length - a.length)[0];
 
 function CertCard({ cert }) {
   const org = orgs[cert.org];
