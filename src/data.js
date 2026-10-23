@@ -137,7 +137,7 @@ export const certs = [
   { name: "CS50AI", org: "Harvard University", mark: "86%", date: "Feb 2024", url: "https://cs50.harvard.edu/certificates/f27a5d40-d20e-4709-9d6a-ae644e07d978", about: "Advanced AI concepts, Python, search algorithms, neural networks." },
   { name: "Microservices & Deployment with ASP.NET", org: "Board Infinity", mark: "95%", date: "Dec 2023", url: "https://coursera.org/share/03c04b91b2a79d9a5048e961ee23b39b", about: "Service architecture, containerisation, and CI/CD pipelines." },
   { name: "Advanced Java", org: "LearnQuest", mark: "92%", date: "Dec 2023" },
-  { name: "C# Class Development", org: "University of Colorado", mark: "", date: "Nov 2023" },
+  { name: "C# Class Development", org: "University of Colorado", mark: "100%", date: "Nov 2023", url: "https://www.coursera.org/account/accomplishments/verify/EYFMSXG3DXM9", about: "Object-oriented C# with classes, inheritance, and Unity game development." },
   { name: "Java II", org: "Georgia Tech", mark: "83%", date: "Aug 2023", url: "https://courses.edx.org/certificates/d53b98b364b348e093f435b804995d18", about: "Object-oriented design, data structures, and algorithmic thinking." },
   { name: "Java I", org: "Georgia Tech", mark: "98%", date: "Jun 2023", url: "https://courses.edx.org/certificates/89a9c6149ace45daad234af1a9560fb2", about: "Syntax, basic OOP principles, and Java tooling." },
   { name: "Computational Thinking & Data Science", org: "MIT", mark: "94%", date: "May 2023", url: "https://courses.edx.org/certificates/99799a611aa140cea73e1494fafa0c02", about: "Python-based modelling, simulations, and data analysis." },
