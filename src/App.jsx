@@ -514,6 +514,7 @@ function CertCarousel() {
       {/* native dialog: Esc, focus trap and backdrop for free; click outside closes */}
       <dialog ref={dlg} className="cert-modal" onClick={(e) => e.target === dlg.current && dlg.current.close()}>
         <p className="eyebrow">{c.org} · {c.date}{c.mark && ` · ${c.mark}`}</p>
+        {c.img && <img className="cert-preview" src={c.img} alt={`${c.name} certificate`} loading="lazy" />}
         <h3>{c.name}</h3>
         <p>{c.about || "Details coming soon."}</p>
         <div className="cert-modal-actions">

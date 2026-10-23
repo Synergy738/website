@@ -1329,3 +1329,4 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 calc(100% 
 @media (max-width: 899px) {
   .wrap:not(#projects) { padding-block: 50px; }
 }
+.cert-preview { display: block; width: 100%; max-height: 50vh; object-fit: contain; margin-block: 0.8rem 1.2rem; border: 1px solid var(--edge); }
