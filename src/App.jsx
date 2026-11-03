@@ -142,6 +142,8 @@ function MobileBar() {
 
 // phones get static sections: no pinned scroll effects
 const PHONE = matchMedia("(max-width: 899px)").matches;
+// low-end machines: render the WebGL layers at lower resolution and freeze the rays
+const LOW = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
 
 // back-to-top fill: share of the page scrolled
 addEventListener("scroll", () => document.documentElement.style.setProperty("--page", scrollY / (document.documentElement.scrollHeight - innerHeight || 1)), { passive: true });
@@ -388,17 +390,15 @@ function Projects() {
         if (u >= 1) api.current?.seek(Math.min(u - 1, n - 1));
       },
     });
-    // entering: the heading rides in at the section top and sticks once it reaches the centre
-    const enter = ScrollTrigger.create({ trigger: el, start: "top bottom", end: "top top", onUpdate: ({ progress }) => el.style.setProperty("--e", progress) });
-    return () => (st.kill(), enter.kill());
+    return () => st.kill();
   }, []);
   return (
     <div className="pj" ref={root}>
       {/* phones: rays drawn once and frozen */}
-      <LightRays className="pj-rays" raysSpeed={PHONE ? 0 : 1} raysColor="#bfe3ff" followMouse={false} cursorShadow={false} clickPulse={false} />
+      <LightRays className="pj-rays" raysSpeed={PHONE || LOW ? 0 : 1} maxDevicePixelRatio={LOW ? 0.5 : 1} raysColor="#bfe3ff" followMouse={false} cursorShadow={false} clickPulse={false} />
       <Heading numeral="V" title="Projects" />
       <div className="pj-stage">
-        <CircularGallery items={items} apiRef={api} wheel={false} side bend={2} itemSize={0.7} borderRadius={0} shadow={0} textColor="#e9edf2" font="bold 26px Cinzel" />
+        <CircularGallery items={items} apiRef={api} dpr={LOW ? 1 : Math.min(devicePixelRatio, 1.5)} wheel={false} side bend={2} itemSize={0.7} borderRadius={0} shadow={0} textColor="#e9edf2" font="bold 26px Cinzel" />
       </div>
     </div>
   );
