@@ -158,7 +158,9 @@ export default function App() {
     if (CSS.supports("animation-timeline: view()")) return;
     const el = document.querySelector(".timeline");
     const st = ScrollTrigger.create({ trigger: el, start: "top center", end: "bottom center", onUpdate: ({ progress }) => el.style.setProperty("--fill", progress) });
-    return () => st.kill();
+    // entering: the heading rides in at the section top and sticks once it reaches the centre
+    const enter = ScrollTrigger.create({ trigger: el, start: "top bottom", end: "top top", onUpdate: ({ progress }) => el.style.setProperty("--e", progress) });
+    return () => (st.kill(), enter.kill());
   }, []);
 
   return (
