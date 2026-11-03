@@ -88,12 +88,12 @@ export const projects = [
       "A Bonteheuwel barbershop with 25 years behind it: online appointment booking, service listings, brand partnerships, barber training programs and community competitions.",
   },
   {
-    title: "Township Luxury",
-    kind: "E-commerce — streetwear",
-    stack: ["WordPress", "WooCommerce"],
-    href: "https://townshipluxury.co.za",
+    title: "Gavin Fortuin",
+    kind: "Client — speaker & consultant",
+    stack: ["HTML", "CSS", "JavaScript", "Vercel"],
+    href: "https://nimble-bronze-kfd4akx-bludennis17-1569s-projects.vercel.app",
     blurb:
-      "Full e-commerce store for a fashion and streetwear brand. Built as a side project for a friend during my first month at Temo Digital.",
+      "Personal brand site for a motivational speaker, leadership consultant and author working in youth and community development. Speaking, consulting and books, built to turn visitors into bookings.",
   },
   {
     title: "Opian Capital",
