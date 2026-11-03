@@ -1258,6 +1258,19 @@ body:has(.rail a[href="#home"].on) .to-top { opacity: 0; translate: 0 calc(100% 
 .pj-rays { position: absolute; inset: 0; opacity: var(--s); background: radial-gradient(90% 80% at 50% 0, rgba(58, 160, 255, 0.16), rgba(58, 160, 255, 0.05)); }
 .pj .sec-head { --cards: 37%; position: absolute; top: min(max(0px, calc(50% - 2.7rem - (1 - var(--e, 1)) * 100%)), calc((1 - var(--s)) * 100% + var(--cards) - 150px - 5.4rem)); left: 0; right: 0; z-index: 2; justify-content: center; margin: 0; pointer-events: none; }
 .pj .sec-head .rule { display: none; }
+/* desktop Chromium: the entering glide runs on the scroll timeline itself, so the heading can't lag a frame behind
+   the page (the JS --e path above stays as the fallback). Held at the centre, then carried off with the section top. */
+@supports (animation-timeline: view()) {
+  @media (min-width: 900px) {
+    .pin-spacer:has(> .pj) { view-timeline: --pj block; }
+    .pj .sec-head { --e: 1; animation: pj-enter linear both; animation-timeline: --pj; animation-range: cover 0px cover 100vh; }
+  }
+}
+@keyframes pj-enter {
+  from { translate: 0 calc(2.7rem - 50vh); }
+  50% { translate: 0 calc(2.7rem - 50vh); }
+  to { translate: 0 0; }
+}
 .pj .sec-head h2, .pj .sec-head .numeral { color: color-mix(in srgb, #07090d calc(var(--s) * 100%), var(--silver)); text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9); }
 .pj-stage { position: absolute; inset: 10svh 0 0; translate: 0 calc((1 - var(--s)) * 100%); }
 .pj-info { display: grid; margin-top: 1.2rem; pointer-events: auto; justify-items: center; gap: 0.8rem; text-align: center; animation: info-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
